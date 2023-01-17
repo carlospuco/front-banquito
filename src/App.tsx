@@ -6,7 +6,6 @@ import HomeUser from "./pages/HomeUser"
 import Login from "./pages/Login"
 import Layout from "./templates/Layout"
 
-
 const App = () => {
   return (
     <BrowserRouter>
