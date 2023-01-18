@@ -1,8 +1,11 @@
 import React from 'react'
+import AccountFormUser from '../components/organisms/AccountFormUser'
 
 const AccountCreateUser = () => {
     return (
-        <div>AccountCreateUser</div>
+        <>
+            <AccountFormUser />
+        </>
     )
 }
 
