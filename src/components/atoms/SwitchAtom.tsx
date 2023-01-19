@@ -21,9 +21,7 @@ const SwitchAtom = (props: Props) => {
                 color={props.color} />
             <Typography>{props.labelOn}</Typography>
         </Stack>
-
     );
 }
-
 
 export default SwitchAtom;
