@@ -41,13 +41,18 @@ const dropdownItems = [
     "Item 3",
 ]
 
+interface AccountFormProps {
+    accountType: string,
+    onSubmit: (data: any) => void;
+}
+
 interface FormAccountInterface {
     identification: string,
     identificationType: string,
     accountType: string
 }
 
-const AccountFormBank = () => {
+const AccountFormBank = (props: AccountFormProps) => {
 
     const [account, setaccount] = useState<FormAccountInterface>({
         identification: "",
@@ -57,13 +62,12 @@ const AccountFormBank = () => {
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(account);
+        props.onSubmit(account);
     }
 
     const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name;
         const value = event.target.value;
-
         setaccount({ ...account, [name]: value });
     }
 

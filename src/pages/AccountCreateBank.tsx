@@ -9,8 +9,15 @@ import { Box, FormControlLabel, Slide, Switch } from '@mui/material'
 const AccountCreateBank = () => {
   const [indexForm, setindexForm] = useState<number>(0)
 
-  const handleTypeAccountButton = (value: number) => {
-    setindexForm(value);
+  const [selectedAccount, setselectedAccount] = useState<string>("");
+
+  const handleTypeAccountButton = (data: string, value?: number) => {
+    value && setindexForm(value);
+    setselectedAccount(data);
+  }
+
+  const handleSubmit = (data: any) => {
+    console.log(data);
   }
 
   return (
@@ -40,24 +47,12 @@ const AccountCreateBank = () => {
             mountOnEnter
             unmountOnExit>
             <div>
-              <AccountFormBank />
+              <AccountFormBank
+                accountType={selectedAccount}
+                onSubmit={handleSubmit} />
             </div>
           </Slide>
         </div>
-        {/* <div style={{ position: 'absolute', left: '25%', right: '25%', bottom: '25%', top: '25%' }}>
-          <Slide
-            in={indexForm == 0}
-            direction={indexForm == 0 ? "left" : "right"}>
-            <SelectAccountTypeForm />
-          </Slide>
-        </div> */}
-        {/* <div style={{ position: 'absolute', left: '25%', right: '25%', bottom: '25%', top: '25%' }}>
-          <Slide
-            in={indexForm == 1}
-            direction={indexForm == 1 ? "left" : "right"}>
-            <AccountFormBank />
-          </Slide>
-        </div> */}
       </div>
 
     </>

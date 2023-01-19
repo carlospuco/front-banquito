@@ -14,8 +14,22 @@ const mainBoxStyle = (): SxProps<Theme> => {
     };
 }
 
+const iconStyle = (): SxProps<Theme> => {
+    return {
+        width: '100px',
+        height: '100px'
+    };
+}
+
+const buttonSize = () => {
+    return {
+        width: '250px',
+        height: '250px',
+    }
+}
+
 interface SelectAccountFormProps {
-    onSelect: (data: number) => void;
+    onSelect: (data: any, index?: number) => void;
 }
 
 const SelectAccountTypeForm = (props: SelectAccountFormProps) => {
@@ -42,43 +56,34 @@ const SelectAccountTypeForm = (props: SelectAccountFormProps) => {
                     <div style={{ margin: 5 }}>
                         <SizeButton
                             palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                            onClick={() => props.onSelect(0)}
+                            onClick={() => props.onSelect("1", 0)}
                             style={ButtonStyle.BIG}
                             text='Inversion'
                             column
-                            icon={<AttachMoneyIcon />}
-                            size={{
-                                width: "250px",
-                                height: "250px"
-                            }}
+                            icon={<AttachMoneyIcon sx={iconStyle()} />}
+                            size={buttonSize()}
                         />
                     </div>
                     <div style={{ margin: 5 }}>
                         <SizeButton
                             palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                            onClick={() => props.onSelect(1)}
+                            onClick={() => props.onSelect("1", 1)}
                             style={ButtonStyle.BIG}
                             text='Inversion'
                             column
-                            icon={<AttachMoneyIcon />}
-                            size={{
-                                width: "250px",
-                                height: "250px"
-                            }}
+                            icon={<AttachMoneyIcon sx={iconStyle()} />}
+                            size={buttonSize()}
                         />
                     </div>
                     <div style={{ margin: 5 }}>
                         <SizeButton
                             palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                            onClick={() => props.onSelect(2)}
+                            onClick={() => props.onSelect("1", 2)}
                             style={ButtonStyle.BIG}
                             text='Inversion'
                             column
-                            icon={<AttachMoneyIcon />}
-                            size={{
-                                width: "250px",
-                                height: "250px"
-                            }}
+                            icon={<AttachMoneyIcon sx={iconStyle()} />}
+                            size={buttonSize()}
                         />
                     </div>
                 </div>
