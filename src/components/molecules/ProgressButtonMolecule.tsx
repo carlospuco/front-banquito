@@ -7,6 +7,7 @@ import { Box } from '@mui/material'
 interface ProgressButtonMoleculeProps {
     color: string
     itemsCount: number,
+    select?: boolean,
     current?: number,
     leftButton?: boolean,
     rightButton?: boolean,
@@ -89,12 +90,14 @@ const ProgressButtonMolecule = (props: ProgressButtonMoleculeProps) => {
                                     backgroundColor: props.color,
                                     opacity: manageOpacity(i),
                                     borderRadius: '100%',
-                                    cursor: 'pointer'
+                                    cursor: (!!props.select) ? 'pointer' : 'auto'
                                 }}
                                 onClick={() => {
-                                    setindex(i);
-                                    enableButtons();
-                                    props.onUpdate?.(i);
+                                    if (!!props.select) {
+                                        setindex(i);
+                                        enableButtons();
+                                        props.onUpdate?.(i);
+                                    }
                                 }} />
                         })
                     }
