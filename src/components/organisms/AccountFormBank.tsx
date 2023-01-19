@@ -55,8 +55,6 @@ const AccountFormBank = () => {
         accountType: ""
     });
 
-    const [indexForm, setindexForm] = useState<number>(0);
-
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(account);
@@ -67,10 +65,6 @@ const AccountFormBank = () => {
         const value = event.target.value;
 
         setaccount({ ...account, [name]: value });
-    }
-
-    const handleChanger = (value: number) => {
-        setindexForm(value);
     }
 
     return (
