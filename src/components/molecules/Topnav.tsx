@@ -14,9 +14,10 @@ const settings = ['Perfil', 'Cerrar sesión'];
 
 interface TopnavProps {
   isLogged: boolean;
+  user: {};
 }
 
-const Topnav = ({ isLogged }: TopnavProps) => {
+const Topnav = ({ isLogged, user }: TopnavProps) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {

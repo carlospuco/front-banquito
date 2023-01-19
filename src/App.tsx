@@ -13,12 +13,13 @@ import { useState } from "react";
 const App = () => {
 
   const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState({});
 
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<Layout isLogged={isLogged} />}>
+          <Route path="" element={<Layout isLogged={isLogged} user={user} />}>
             <Route index element={<Login />} />
             {userRoutes.map((route) => (
               <Route

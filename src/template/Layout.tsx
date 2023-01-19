@@ -3,12 +3,13 @@ import Topnav from "../components/molecules/Topnav";
 
 interface TopnavProps {
   isLogged: boolean;
+  user: {};
 }
 
-const Layout = ({ isLogged }: TopnavProps) => {
+const Layout = ({ isLogged, user }: TopnavProps) => {
   return (
     <>
-      <Topnav isLogged={isLogged} />
+      <Topnav isLogged={isLogged} user={user} />
       <Outlet />
     </>
   );
