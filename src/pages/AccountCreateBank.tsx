@@ -1,8 +1,11 @@
 import React from 'react'
+import AccountFormBank from '../components/organisms/AccountFormBank'
 
 const AccountCreateBank = () => {
   return (
-    <div>AccountCreateBank</div>
+    <>
+      <AccountFormBank />
+    </>
   )
 }
 

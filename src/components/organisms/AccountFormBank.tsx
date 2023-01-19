@@ -1,11 +1,11 @@
+import { Card, CardContent, Typography, TextField, Avatar } from '@mui/material'
+import { Container, Box, SxProps, Theme } from '@mui/system'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import TextFieldAtom from '../atoms/TextFieldAtom'
-import { ColorPalette } from '../../style/ColorPalette'
-import { Avatar, Box, Card, CardContent, Container, SvgIcon, SxProps, TextField, Theme, Typography } from '@mui/material'
-import { SizeButton } from '../atoms/SizeButton'
 import { ButtonStyle } from '../../style/ButtonStyle'
+import { ColorPalette } from '../../style/ColorPalette'
 import { Dropdown } from '../atoms/Dropdown'
-import BanQuitoLogo from '../../assets/BanQuito-Logo.svg'
+import { SizeButton } from '../atoms/SizeButton'
+
 
 const cardStyle: SxProps<Theme> = {
     display: 'flex',
@@ -52,13 +52,15 @@ const dropdownItems = [
 interface FormAccountInterface {
     identification: string,
     identificationType: string,
+    accountType: string
 }
 
-const AccountFormUser = () => {
+const AccountFormBank = () => {
 
     const [account, setaccount] = useState<FormAccountInterface>({
         identification: "",
-        identificationType: ""
+        identificationType: "",
+        accountType: ""
     });
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -100,6 +102,15 @@ const AccountFormUser = () => {
                                     items={dropdownItems}
                                     backgroundColor={ColorPalette.SECONDARY}
                                     onChange={(value: string) =>
+                                        setaccount({ ...account, accountType: value })}
+                                />
+                                <Dropdown
+                                    width={200}
+                                    height={100}
+                                    label={textHelpers.typeIdentification}
+                                    items={dropdownItems}
+                                    backgroundColor={ColorPalette.SECONDARY}
+                                    onChange={(value: string) =>
                                         setaccount({ ...account, identificationType: value })}
                                 />
                                 <TextField
@@ -131,20 +142,6 @@ const AccountFormUser = () => {
                                     submit
                                     text={textHelpers.buttonText} />
                             </Box>
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    bottom: 0,
-                                    right: 0
-                                }}>
-                                <Avatar
-                                    src={BanQuitoLogo}
-                                    sx={{ 
-                                        width: 50, 
-                                        height: 50,
-                                        margin: 1 }}
-                                    variant='square' />
-                            </Box>
                         </CardContent>
                     </Card>
                 </Box>
@@ -153,4 +150,4 @@ const AccountFormUser = () => {
     )
 }
 
-export default AccountFormUser
+export default AccountFormBank
