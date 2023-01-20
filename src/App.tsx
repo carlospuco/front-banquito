@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreateUser";
+import CreateSignature from "./pages/AccountCreateSignature";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           ))}
           <Route path="cliente" element={<HomeClient />} />
           <Route path="cajero" element={<HomeATM />} />
+          <Route path="client/account/signature" element={<CreateSignature />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>
