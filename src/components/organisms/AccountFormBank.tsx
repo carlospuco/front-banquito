@@ -72,6 +72,15 @@ const AccountFormBank = (props: AccountFormProps) => {
         setaccount({ ...account, [name]: value });
     }
 
+    const getDropdownData = (): { name: string, value: any }[] => {
+        return props.products.map(product => {
+            return {
+                name: product.name,
+                value: product.codeProduct
+            }
+        })
+    }
+
     return (
         <>
             <Box sx={mainBoxStyle()}>
@@ -89,24 +98,38 @@ const AccountFormBank = (props: AccountFormProps) => {
                     component="form"
                     onSubmit={submitHandler}
                     sx={formStyle()}>
-                    <Dropdown
-                        width={200}
-                        height={100}
-                        label="Tipo de Cuenta"
-                        items={props.products}
-                        backgroundColor={ColorPalette.SECONDARY}
-                        onChange={(value: string) =>
-                            setaccount({ ...account, codeProduct: value })}
-                    />
-                    <Dropdown
-                        width={200}
-                        height={100}
-                        label={textHelpers.typeIdentification}
-                        items={IdentificationTypes}
-                        backgroundColor={ColorPalette.SECONDARY}
-                        onChange={(value: string) =>
-                            setaccount({ ...account, identificationType: value })}
-                    />
+                    <div style={{
+                        width: '100%',
+                        height: 'auto',
+                        marginTop: '0.5rem',
+                        marginBottom: '0.5rem'
+                    }}>
+                        <Dropdown
+                            width={"100%"}
+                            height={"auto"}
+                            label="Tipo de Cuenta"
+                            items={getDropdownData()}
+                            backgroundColor={ColorPalette.SECONDARY}
+                            onChange={(value: string) =>
+                                setaccount({ ...account, codeProduct: value })}
+                        />
+                    </div>
+                    <div style={{
+                        width: '100%',
+                        height: 'auto',
+                        marginTop: '0.5rem',
+                        marginBottom: '0.5rem'
+                    }}>
+                        <Dropdown
+                            width={"100%"}
+                            height={"auto"}
+                            label={textHelpers.typeIdentification}
+                            items={IdentificationTypes}
+                            backgroundColor={ColorPalette.SECONDARY}
+                            onChange={(value: string) =>
+                                setaccount({ ...account, identificationType: value })}
+                        />
+                    </div>
                     <TextField
                         id="identification"
                         name="identification"
