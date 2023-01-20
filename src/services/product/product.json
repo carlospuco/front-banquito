@@ -1,0 +1,29 @@
+[
+    {
+        "codeProductType": "1",
+        "name": "Interes",
+        "products": [
+            "Interes 1",
+            "Interes 2",
+            "Interes 3"
+        ]
+    },
+    {
+        "codeProductType": "2",
+        "name": "Ahorros",
+        "products": [
+            "Ahorros 1",
+            "Ahorros 2",
+            "Ahorros 3"
+        ]
+    },
+    {
+        "codeProductType": "3",
+        "name": "Corriente",
+        "products": [
+            "Corriente 1",
+            "Corriente 2",
+            "Corriente 3"
+        ]
+    }
+]

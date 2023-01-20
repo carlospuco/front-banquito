@@ -5,6 +5,7 @@ import { ButtonStyle } from '../../style/ButtonStyle'
 import { ColorPalette } from '../../style/ColorPalette'
 import { Dropdown } from '../atoms/Dropdown'
 import { SizeButton } from '../atoms/SizeButton'
+import IdentificationTypes from './IdentificationType.json'
 
 const mainBoxStyle = (): SxProps<Theme> => {
     return {
@@ -35,21 +36,18 @@ const textHelpers = {
     identificationPlaceholder: 'Identifificación'
 }
 
-const dropdownItems = [
-    "Item 1",
-    "Item 2",
-    "Item 3",
-]
-
-interface AccountFormProps {
-    accountType: string,
-    onSubmit: (data: any) => void;
-}
-
 interface FormAccountInterface {
     identification: string,
     identificationType: string,
-    accountType: string
+    codeProduct: string,
+    codeBranch: string,
+    entityBankCode: string,
+    internationalBankCode: string,
+}
+
+interface AccountFormProps {
+    onSubmit: (data: any) => void,
+    products: any[],
 }
 
 const AccountFormBank = (props: AccountFormProps) => {
@@ -57,7 +55,10 @@ const AccountFormBank = (props: AccountFormProps) => {
     const [account, setaccount] = useState<FormAccountInterface>({
         identification: "",
         identificationType: "",
-        accountType: ""
+        codeProduct: "",
+        codeBranch: "12345",
+        entityBankCode: "12345",
+        internationalBankCode: "12345",
     });
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -92,16 +93,16 @@ const AccountFormBank = (props: AccountFormProps) => {
                         width={200}
                         height={100}
                         label="Tipo de Cuenta"
-                        items={dropdownItems}
+                        items={props.products}
                         backgroundColor={ColorPalette.SECONDARY}
                         onChange={(value: string) =>
-                            setaccount({ ...account, accountType: value })}
+                            setaccount({ ...account, codeProduct: value })}
                     />
                     <Dropdown
                         width={200}
                         height={100}
                         label={textHelpers.typeIdentification}
-                        items={dropdownItems}
+                        items={IdentificationTypes}
                         backgroundColor={ColorPalette.SECONDARY}
                         onChange={(value: string) =>
                             setaccount({ ...account, identificationType: value })}

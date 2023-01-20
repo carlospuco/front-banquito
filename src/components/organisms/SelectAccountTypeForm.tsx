@@ -3,7 +3,9 @@ import { Box, SxProps, Theme, Typography } from '@mui/material';
 import { SizeButton } from '../atoms/SizeButton';
 import { ColorPalette } from '../../style/ColorPalette';
 import { ButtonStyle } from '../../style/ButtonStyle';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { AccountBalance } from '@mui/icons-material';
+import { Savings } from '@mui/icons-material';
+import { Wallet } from '@mui/icons-material';
 
 const mainBoxStyle = (): SxProps<Theme> => {
     return {
@@ -60,29 +62,31 @@ const SelectAccountTypeForm = (props: SelectAccountFormProps) => {
                             style={ButtonStyle.BIG}
                             text='Inversion'
                             column
-                            icon={<AttachMoneyIcon sx={iconStyle()} />}
+                            icon={<Wallet sx={iconStyle()} />}
                             size={buttonSize()}
                         />
                     </div>
                     <div style={{ margin: 5 }}>
                         <SizeButton
                             palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                            onClick={() => props.onSelect("1", 1)}
+                            onClick={() => props.onSelect("2", 1)}
                             style={ButtonStyle.BIG}
-                            text='Inversion'
+                            text='Ahorros'
                             column
-                            icon={<AttachMoneyIcon sx={iconStyle()} />}
+                            icon={<Savings sx={iconStyle()} />}
                             size={buttonSize()}
                         />
                     </div>
                     <div style={{ margin: 5 }}>
                         <SizeButton
                             palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                            onClick={() => props.onSelect("1", 2)}
+                            onClick={() => props.onSelect("3", 2)}
                             style={ButtonStyle.BIG}
-                            text='Inversion'
+                            text='Corriente'
                             column
-                            icon={<AttachMoneyIcon sx={iconStyle()} />}
+                            icon={<AccountBalance
+                                
+                                sx={iconStyle()} />}
                             size={buttonSize()}
                         />
                     </div>
