@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import TransferUserForm from '../components/organisms/TransferUserForm';
+import ConfirmTransferUserForm from '../components/organisms/ConfirmTransferUserForm';
 
-const TransferUser = () => {
+const ConfirmTransferUser = () => {
     const [products, setproducts] = useState<any[] | undefined>([]);
 
     const navigate = useNavigate();
 
     return (
         <>
-            <TransferUserForm
+            <ConfirmTransferUserForm
                 onSubmit={MessageEvent.toString}
                 products={products ? products : []} />
         </>
     )
 }
 
-export default TransferUser
+export default ConfirmTransferUser

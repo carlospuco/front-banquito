@@ -46,11 +46,12 @@ const elementText = {
     emailPlaceholder: 'ejemplo@ejemplo.com'
 }
 
-interface TransferFormProps {
+interface AccountFormProps {
     onSubmit: (data: any) => void,
+    products: any[],
 }
 
-const TransferUserForm = (props: TransferFormProps) => {
+const ConfirmTransferUserForm = (props: AccountFormProps) => {
     return (
         <>
             <Box sx={mainBoxStyle()}>
@@ -149,4 +150,4 @@ const TransferUserForm = (props: TransferFormProps) => {
     )
 }
 
-export default TransferUserForm
+export default ConfirmTransferUserForm
