@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreateUser";
+import TransferUser from "./pages/TransferUser";
 
 const App = () => {
   return (
@@ -43,6 +44,10 @@ const userRoutes = [
     path: "cuenta/crear",
     element: <AccountCreateUser />,
   },
+  {
+    path: "transaccion/transferUsuario",
+    element: <TransferUser />,
+  }
 ];
 
 export default App;
