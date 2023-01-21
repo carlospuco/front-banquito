@@ -9,10 +9,14 @@ import IdentificationTypes from './IdentificationType.json'
 
 const mainBoxStyle = (): SxProps<Theme> => {
     return {
-        marginTop: 8,
+        marginTop: 4,
+        marginBottom: 4,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 5,
+        borderRadius: 5
     };
 }
 
