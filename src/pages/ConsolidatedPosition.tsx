@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material';
 import { Dropdown } from '../components/atoms/Dropdown';
 
 
-const AppConsolidatedPosition = () => {
+const ConsolidatedPosition = () => {
     const headersMock = [
         <Typography>No Cuenta</Typography>,
         <Typography>Tipo de cuenta</Typography>,
@@ -42,4 +42,4 @@ const AppConsolidatedPosition = () => {
 
 };
 
-export default AppConsolidatedPosition;
+export default ConsolidatedPosition;
