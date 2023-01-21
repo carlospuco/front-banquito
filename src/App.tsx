@@ -8,6 +8,7 @@ import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreateUser";
 import CreateSignature from "./pages/AccountCreateSignature";
+import EditAccountSignature from "./pages/EditAccountSignature";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="cliente" element={<HomeClient />} />
           <Route path="cajero" element={<HomeATM />} />
           <Route path="client/account/signature" element={<CreateSignature />} />
+          <Route path="client/edit/account/signature" element={<EditAccountSignature />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>
