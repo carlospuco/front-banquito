@@ -12,6 +12,7 @@ import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatemen
 import Branch from "./pages/ClientPages/Branches/Branch"
 import TransferUser from "./pages/TransferUser";
 import TransferBank from "./pages/TransferBank";
+import { DeleteLocation } from "./components/organisms/Location/DeleteLocation";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
+    
   );
 };
 
