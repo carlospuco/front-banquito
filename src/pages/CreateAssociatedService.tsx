@@ -38,7 +38,7 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: start;
   width: 100%;
   height: 20%;
   padding: 0px;
@@ -68,6 +68,10 @@ export const ReturnButton = styled.div`
   top: 0;
 `;
 
+export const Span = styled.span`
+  width: 200px;
+`;
+
 const formStyle = (): SxProps<Theme> => {
   return {
     mt: 1,
@@ -79,6 +83,7 @@ const formStyle = (): SxProps<Theme> => {
     height: 330,
   };
 };
+
 
 interface FormAssociatedService {
   name: String;
@@ -93,7 +98,7 @@ interface AssociatedServiceProps {
   onSubmit: (data: any) => void;
 }
 
-const CrearAssociatedService = (props: AssociatedServiceProps) => {
+const CreateAssociatedService = (props: AssociatedServiceProps) => {
 
   const [service, setservice] = useState<FormAssociatedService>({
     name: "pepe1",
@@ -127,7 +132,7 @@ const CrearAssociatedService = (props: AssociatedServiceProps) => {
         <div>
           <Box component="form" onSubmit={submitHandler} sx={formStyle()}>
             <FormContainer>
-              <span>Nombre: </span>
+              <Span>Nombre: </Span>
               <TextFieldAtom
                 id="idName"
                 label="Nombre del servicio"
@@ -138,12 +143,12 @@ const CrearAssociatedService = (props: AssociatedServiceProps) => {
               />
             </FormContainer>
             <FormContainer>
-              <span>Permite Pagos: </span>
-              <Checkbox label="" />
+              <Span>Permite Pagos: </Span>
+              <Checkbox label="Seleccionar" />
             </FormContainer>
 
             <FormContainer>
-              <span>Método de pago:</span>
+              <Span>Método de pago:</Span>
               <Dropdown
                 width={"50%"}
                 height={"auto"}
@@ -165,7 +170,7 @@ const CrearAssociatedService = (props: AssociatedServiceProps) => {
               />
             </FormContainer>
             <FormContainer>
-              <span>Costo: </span>
+              <Span>Costo: </Span>
               <TextFieldAtom
                 id="idPaymentMehod"
                 label="Metodo de pago"
@@ -186,11 +191,10 @@ const CrearAssociatedService = (props: AssociatedServiceProps) => {
               />
             </ContentButtonAddRight>
           </Box>
-
         </div>
       </Content>
     </Container>
   );
 };
 
-export default CrearAssociatedService;
+export default CreateAssociatedService;
