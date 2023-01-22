@@ -1,14 +1,12 @@
-import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
-import ConfirmTransferUserForm from '../../../components/organisms/ConfirmTransferUserForm';
-import TransferUserForm from '../../../components/organisms/TransferAmountForm';
-import Error404 from '../../Error404';
-import TransferDataForm from '../../../components/organisms/TransferDataForm';
-import TransferAmountForm from '../../../components/organisms/TransferAmountForm';
+import { useNavigate } from 'react-router-dom';
 import { Transference } from '../../../services/transference/model/Transference';
-import ProgressButtonMolecule from '../../../components/molecules/ProgressButtonMolecule';
 import { ColorPalette } from '../../../style/ColorPalette';
 import { Box } from '@mui/material';
+import ConfirmTransferUserForm from '../../../components/organisms/ConfirmTransferUserForm';
+import TransferDataForm from '../../../components/organisms/TransferDataForm';
+import TransferAmountForm from '../../../components/organisms/TransferAmountForm';
+import ProgressButtonMolecule from '../../../components/molecules/ProgressButtonMolecule';
 
 const TransferUser = () => {
 

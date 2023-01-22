@@ -3,11 +3,11 @@ import { Box } from '@mui/system'
 import { Fade } from '@mui/material'
 import { ColorPalette } from '../../../style/ColorPalette'
 import { ChevronLeft, Print } from '@mui/icons-material'
-import ButtonIcon from '../../../components/atoms/ButtonIcon'
-import AccountStatementBody from '../../../components/organisms/AccountStatement/AccountStatementBody'
 import { AccountStament } from '../../../services/account/model/AccountStatement'
 import { AccountStatementService } from '../../../services/account/accountStatementService'
+import ButtonIcon from '../../../components/atoms/ButtonIcon'
 import ReactToPrint from 'react-to-print'
+import AccountStatementBody from '../../../components/organisms/AccountStatement/AccountStatementBody'
 import AccountStatementTable from '../../../components/organisms/AccountStatement/AccountStatementTable'
 
 const AccountStatementClient = () => {

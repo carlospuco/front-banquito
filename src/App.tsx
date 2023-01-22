@@ -25,7 +25,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Layout isLogged={false} user={{}} />}>
+        <Route path="" element={<Layout isLogged={true} user={{}} />}>
           <Route index element={<Login />} />
           {userRoutes.map((route) => (
             <Route
