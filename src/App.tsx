@@ -6,7 +6,7 @@ import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
-import Branch from "./pages/ClientPages/Branches/Branch"
+import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountCreateUser from "./pages/AccountCreateUser";
 
 const App = () => {
@@ -22,7 +22,13 @@ const App = () => {
               element={route.element}
             />
           ))}
-          <Route path="cliente" element={<HomeClient />} />
+          {clientRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={`cliente/${route.path}`}
+              element={route.element}
+            />
+          ))}
           <Route path="cajero" element={<HomeATM />} />
         </Route>
         <Route path="*" element={<Error404 />} />
@@ -48,9 +54,13 @@ const userRoutes = [
 
 const clientRoutes = [
   {
+    path: "",
+    element: <HomeClient />,
+  },
+  {
     path: "sucursales",
-    element: <Branch />
-  }
-]
+    element: <Branch />,
+  },
+];
 
 export default App;
