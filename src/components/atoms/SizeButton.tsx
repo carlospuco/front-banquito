@@ -9,7 +9,7 @@ interface Props {
     backgroundColor: string,
     accent?: string,
   },
-  submit?: boolean
+  submit?: boolean,
   onClick?: () => void,
   column?: boolean,
   icon?: any,
@@ -38,7 +38,6 @@ export const SizeButton = (props: Props) => {
           break;
       }
     }
-
     return width;
   }
 
@@ -54,6 +53,7 @@ export const SizeButton = (props: Props) => {
           borderRadius: "10px",
           transition: "all .3s ease- out",
           width: configureWidth,
+          height: props.size?.height ? props.size.height : 'auto',
           ':hover': {
             backgroundColor: props.palette.accent ? props.palette.accent : 'transparent',
             color: props.palette.backgroundColor,
@@ -65,7 +65,7 @@ export const SizeButton = (props: Props) => {
         <Grid
           display='flex'
           flexDirection={(props.column) ? 'column' : 'row'}
-          justifyContent='center'
+          justifyContent='space-between'
           alignItems='center'
           gap={(props.column) ? 0.5 : 1.5}>
           {props.icon ? <Box display='flex' flexDirection={(props.column != null) ? 'column' : 'row'} justifyContent='center' alignItems='center' sx={{ width: "100%", height: "100%" }}>{props.icon}</Box> : null}

@@ -6,17 +6,17 @@ interface Props{
     label: string;
     color: any;
     type: string;
-    placeholder: string;
+    value: string;
     variant: any;
 }
 
-const TextFieldAtom = (props: Props) =>{
+const ConfirmTextFieldAtom = (props: Props) =>{
     return (
         <TextField
             id={props.id}
             label={props.label}
             type={props.type}
-            placeholder={props.placeholder}
+            value={props.value}
             variant={props.variant}
             color={props.color}>
             
@@ -26,4 +26,4 @@ const TextFieldAtom = (props: Props) =>{
 }
 
 
-export default TextFieldAtom;
+export default ConfirmTextFieldAtom;

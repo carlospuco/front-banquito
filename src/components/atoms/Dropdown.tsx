@@ -1,26 +1,32 @@
 import React from "react";
-import { FormControl } from "@mui/material";
+import { FormControl, SxProps } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Theme } from "@emotion/react";
 
 interface DropdownProps {
   label: string;
-  items: string[];
+  items: { name: string; value: any }[];
   width: number | string;
   height: number | string;
   backgroundColor?: string | "white";
+  selectedTextColor?: string | "white";
   onChange?: (value: string) => void;
+  inputLabelColor?: string | "white";
+  inputFocusedLabelColor?: string | "#4B4B4B";
 }
 
 const formControlStyles = (props: DropdownProps) => ({
-  width: props.width,
-  height: props.height,
+  width: props.width || 200,
+  height: props.height || 50,
 });
 
-const selectStyles = (props: DropdownProps) => ({
+const selectStyles = (props: DropdownProps): SxProps<Theme> => ({
+  color: props.selectedTextColor || "white",
   "& .MuiSelect-select": {
     backgroundColor: props.backgroundColor,
+    borderRadius: "10px",
   },
   "& .MuiSelect-icon": {
     color: "white",
@@ -28,20 +34,24 @@ const selectStyles = (props: DropdownProps) => ({
   },
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: props.backgroundColor,
+    borderRadius: "10px",
   },
   "&:hover .MuiOutlinedInput-notchedOutline": {
     borderColor: "white",
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: props.backgroundColor,
+    borderRadius: "10px",
   },
 });
 
-const inputLabelStyles = () => ({
-  color: "white",
+const inputLabelStyles = (props: DropdownProps) => ({
+  color: props.inputLabelColor || "white",
   fontSize: "1rem",
+
   "&.Mui-focused": {
-    color: "black",
+    color: props.inputFocusedLabelColor || "#6a6161",
+    fontWeight: "bold",
   },
 });
 
@@ -54,11 +64,11 @@ export const Dropdown = (props: DropdownProps) => {
 
   return (
     <FormControl sx={formControlStyles(props)}>
-      <InputLabel sx={inputLabelStyles}>{label}</InputLabel>
+      <InputLabel sx={inputLabelStyles(props)}>{label}</InputLabel>
       <Select sx={selectStyles(props)} label={label} onChange={handleChange}>
         {items.map((item, index) => (
-          <MenuItem key={index} value={item}>
-            {item}
+          <MenuItem key={index} value={item.value}>
+            {item.name}
           </MenuItem>
         ))}
       </Select>
