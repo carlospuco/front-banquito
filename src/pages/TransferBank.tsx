@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate, useNavigation } from 'react-router-dom';
 import ConfirmTransferUserForm from '../components/organisms/ConfirmTransferUserForm';
-import TransferBankRecipeForm from '../components/organisms/TransferBankRecipeForm';
 import ProgressButtonMolecule from '../components/molecules/ProgressButtonMolecule';
 import { ColorPalette } from '../style/ColorPalette';
 import { Transference } from '../services/transference/model/Transference';
 import TransferDataForm from '../components/organisms/TransferDataForm';
 import TransferAmountForm from '../components/organisms/TransferAmountForm';
-import { useNavigate, useNavigation } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 const TransferBank = () => {
