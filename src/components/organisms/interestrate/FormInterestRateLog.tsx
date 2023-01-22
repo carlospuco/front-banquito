@@ -1,14 +1,14 @@
 import React from 'react'
-import { ColorPalette } from '../style/ColorPalette';
+import { ColorPalette } from '../../../style/ColorPalette';
 import { ContainChild, ContainChild2, ContainChild3, ContainChild4, ContainChild5, ContainChild6, ContainerButtons, ContainerForm, ContainParent, ContentForm } from './FormInterestRate';
 import { ReturnButton } from './InteresRate';
 // icon keyboar backspace
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import ButtonIcon from '../components/atoms/ButtonIcon';
-import TextFieldAtom from '../components/atoms/TextFieldAtom';
-import { Dropdown } from '../components/atoms/Dropdown';
-import { ButtonStyle } from '../style/ButtonStyle';
-import { SizeButton } from '../components/atoms/SizeButton';
+import ButtonIcon from '../../atoms/ButtonIcon';
+import TextFieldAtom from '../../atoms/TextFieldAtom';
+import { Dropdown } from '../../atoms/Dropdown';
+import { ButtonStyle } from '../../../style/ButtonStyle';
+import { SizeButton } from '../../atoms/SizeButton';
 const FormInterestRateLog = () => {
     return (
         <ContainerForm>
@@ -22,7 +22,12 @@ const FormInterestRateLog = () => {
                         <span>Nombre:</span>
                     </ContainChild>
                     <ContainChild2>
-                        <Dropdown label='Seleccionar' items={['Tipo 1', 'Tipo 2', 'Tipo 3']} width={200} height={40}
+                        <Dropdown label='Seleccionar' items={
+                            [
+                                { name: 'Tasa de interes 1', value: '1' },
+                                { name: 'Tasa de interes 2', value: '2' },
+                            ]
+                        } width={200} height={40}
                             onChange={(event: { target: { value: any; }; }) => console.log(event.target.value)}
                             backgroundColor={ColorPalette.SECONDARY}
                         />

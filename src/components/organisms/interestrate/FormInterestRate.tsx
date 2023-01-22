@@ -3,15 +3,15 @@ import { Container, Content, ReturnButton } from './InteresRate'
 
 // icon keyboar backspace
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import ButtonIcon from '../components/atoms/ButtonIcon';
+import ButtonIcon from '../../atoms/ButtonIcon';
 // search icon
 import SearchIcon from '@mui/icons-material/Search';
-import { ColorPalette } from '../style/ColorPalette';
+import { ColorPalette } from '../../../style/ColorPalette';
 import styled from 'styled-components';
-import TextFieldAtom from '../components/atoms/TextFieldAtom';
-import { Dropdown } from '../components/atoms/Dropdown';
-import { SizeButton } from '../components/atoms/SizeButton';
-import { ButtonStyle } from '../style/ButtonStyle';
+import TextFieldAtom from '../../atoms/TextFieldAtom';
+import { Dropdown } from '../../atoms/Dropdown';
+import { SizeButton } from '../../atoms/SizeButton';
+import { ButtonStyle } from '../../../style/ButtonStyle';
 
 // ContainParent
 export const ContainParent = styled.div`
@@ -97,7 +97,13 @@ const FormInterestRate = () => {
                         <span>Tipo</span>
                     </ContainChild3>
                     <ContainChild4>
-                        <Dropdown label='Seleccionar' items={['Tipo 1', 'Tipo 2', 'Tipo 3']} width={200} height={40}
+                        <Dropdown label='Seleccionar' items={[{
+                            name: 'Tasa de interes',
+                            value: 'Tasa de interes'
+                        }, {
+                            name: 'Tasa de interes',
+                            value: 'Tasa de interes'
+                        }]} width={200} height={40}
                             onChange={(event: { target: { value: any; }; }) => console.log(event.target.value)}
                             backgroundColor={ColorPalette.SECONDARY}
                         />
