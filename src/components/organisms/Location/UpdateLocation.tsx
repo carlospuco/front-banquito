@@ -78,7 +78,6 @@ export const UpdateLocation = () => {
     getProvinces().then(setProvinces);
     getCantons().then(setCantons);
     getParishes().then(setParishes);
-    console.log(parishes);
   }, [dropdownValue]);
 
   return (
