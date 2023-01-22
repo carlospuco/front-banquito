@@ -6,6 +6,7 @@ import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
+import Branch from "./pages/ClientPages/Branches/Branch"
 import AccountCreateUser from "./pages/AccountCreateUser";
 import TransferUser from "./pages/TransferUser";
 import TransferBank from "./pages/TransferBank";
@@ -55,5 +56,12 @@ const userRoutes = [
   }
 
 ];
+
+const clientRoutes = [
+  {
+    path: "sucursales",
+    element: <Branch />
+  }
+]
 
 export default App;
