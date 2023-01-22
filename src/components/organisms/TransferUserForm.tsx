@@ -47,7 +47,7 @@ interface FormTransferUserInterface {
     recipeAccount: number
 }
 
-interface TransferFormProps{
+interface TransferFormProps {
     onSubmit: (data: any) => void,
 }
 
@@ -72,7 +72,10 @@ const TransferUserForm = (props: TransferFormProps) => {
 
     return (
         <>
-            <Box sx={mainBoxStyle()}>
+            <Box
+                component="form"
+                onSubmit={submitHandler}
+                sx={mainBoxStyle()}>
                 <Typography
                     component="h1"
                     variant="h4"
@@ -84,8 +87,6 @@ const TransferUserForm = (props: TransferFormProps) => {
                     {elementText.title}
                 </Typography>
                 <Box
-                    component="form"
-                    onSubmit={submitHandler}
                     sx={
                         fieldBoxStyle()
                     }>
@@ -100,19 +101,17 @@ const TransferUserForm = (props: TransferFormProps) => {
                         required
                     />
                 </Box>
-                
+
                 <Box
-                    component="form"
-                    onSubmit={submitHandler}
                     sx={
                         fieldBoxStyle()
                     }>
-                        <Typography
-                    sx={
-                        subtitleBoxStyle()
-                    }>
-                    {elementText.subtitle}
-                </Typography>
+                    <Typography
+                        sx={
+                            subtitleBoxStyle()
+                        }>
+                        {elementText.subtitle}
+                    </Typography>
                     <TextField
                         id="cuenta"
                         name="cuenta"
@@ -145,8 +144,8 @@ const TransferUserForm = (props: TransferFormProps) => {
                         }}
                         style={ButtonStyle.BIG}
                         submit
-                        text={elementText.buttonText} 
-                        />
+                        text={elementText.buttonText}
+                    />
                 </Box>
             </Box>
         </>

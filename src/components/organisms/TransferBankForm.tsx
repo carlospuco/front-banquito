@@ -30,7 +30,7 @@ const formStyle = (): SxProps<Theme> => {
 
 const elementText = {
     title: 'Usuario Banco',
-    originAccount: 'Numero de cuenta Origen',
+    originAccount: 'Numero de cuenta',
     amount: 'Monto a transferir',
     typeIdentification: 'Tipo Identificación',
     identification: 'Identificacion',
@@ -38,7 +38,7 @@ const elementText = {
 }
 
 interface FormTransferInterface {
-    originAccount: number,
+    originAccount: string,
     amount: number,
     typeIdentification: string,
     identification: string,
@@ -51,7 +51,7 @@ interface TransferFormProps {
 
 const TransferBankForm = (props: TransferFormProps) => {
     const [transfer, settransfer] = useState<FormTransferInterface>({
-        originAccount: 123456789,
+        originAccount: "123456789",
         amount: 20.00,
         typeIdentification: "",
         identification: ""
@@ -111,107 +111,111 @@ const TransferBankForm = (props: TransferFormProps) => {
 
     return (
         <>
-            <Box>
-                <Typography
-                    component="h1"
-                    variant="h4"
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                    {elementText.title}
-                </Typography>
-            </Box>
             <Box
-                sx={
-                    formBoxStyle()
-                }>
+                component="form"
+                onSubmit={submitHandler}>
+                <Box>
+                    <Typography
+                        component="h1"
+                        variant="h4"
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                        {elementText.title}
+                    </Typography>
+                </Box>
                 <Box
                     sx={
-                        mainBoxStyle()
+                        formBoxStyle()
                     }>
                     <Box
                         sx={
-                            fieldBoxStyle()
+                            mainBoxStyle()
                         }>
-                        <TextField
-                            id="tipoIdentificacion"
-                            name="tipoIdentificacion"
-                            margin="normal"
-                            fullWidth
-                            type="text"
-                            onChange={handleFormChange}
-                            label={elementText.identification}
-                            required
-                        />
+                        <Box
+                            sx={
+                                fieldBoxStyle()
+                            }>
+                            <TextField
+                                id="numCuenta"
+                                name="numCuentav"
+                                margin="normal"
+                                fullWidth
+                                type="text"
+                                onChange={handleFormChange}
+                                label={elementText.originAccount}
+                                required
+                            />
+                        </Box>
+                        <Box
+                            sx={
+                                fieldBoxStyle()
+                            }>
+                            <Dropdown
+                                width={"100%"}
+                                height={"auto"}
+                                label={elementText.typeIdentification}
+                                items={IdentificationTypes}
+                                backgroundColor={ColorPalette.SECONDARY}
+                                onChange={(value: string) =>
+                                    settransfer({ ...transfer, typeIdentification: value })}
+                            />
+                        </Box>
                     </Box>
                     <Box
                         sx={
-                            fieldBoxStyle()
+                            mainBoxStyle()
                         }>
-                        <Dropdown
-                            width={"100%"}
-                            height={"auto"}
-                            label={elementText.typeIdentification}
-                            items={IdentificationTypes}
-                            backgroundColor={ColorPalette.SECONDARY}
-                            onChange={(value: string) =>
-                                settransfer({ ...transfer, typeIdentification: value })}
-                        />
+                        <Box
+                            sx={
+                                fieldBoxStyle()
+                            }>
+                            <TextField
+                                id="monto"
+                                name="monto"
+                                margin="normal"
+                                fullWidth
+                                type="text"
+                                onChange={handleFormChange}
+                                label={elementText.amount}
+                                required
+                            />
+                        </Box>
+                        <Box
+                            sx={
+                                fieldBoxStyle()
+                            }>
+                            <TextField
+                                id="identificacion"
+                                name="identificacion"
+                                margin="normal"
+                                fullWidth
+                                type="text"
+                                onChange={handleFormChange}
+                                label={elementText.identification}
+                                required
+                            />
+                        </Box>
                     </Box>
                 </Box>
                 <Box
                     sx={
-                        mainBoxStyle()
+                        buttonBoxStyle()
                     }>
-                    <Box
-                        sx={
-                            fieldBoxStyle()
-                        }>
-                        <TextField
-                            id="monto"
-                            name="monto"
-                            margin="normal"
-                            fullWidth
-                            type="text"
-                            onChange={handleFormChange}
-                            label={elementText.amount}
-                            required
-                        />
-                    </Box>
-                    <Box
-                        sx={
-                            fieldBoxStyle()
-                        }>
-                        <TextField
-                            id="identificacion"
-                            name="identificacion"
-                            margin="normal"
-                            fullWidth
-                            type="text"
-                            onChange={handleFormChange}
-                            label={elementText.identification}
-                            required
-                        />
-                    </Box>
+                    <SizeButton
+                        palette={{
+                            backgroundColor: ColorPalette.PRIMARY
+                        }}
+                        size={{
+                            height: 'auto',
+                            width: 'auto'
+                        }}
+                        style={ButtonStyle.BIG}
+                        submit
+                        text={elementText.buttonText} />
                 </Box>
-            </Box>
-            <Box
-                sx={
-                    buttonBoxStyle()
-                }>
-                <SizeButton
-                    palette={{
-                        backgroundColor: ColorPalette.PRIMARY
-                    }}
-                    size={{
-                        height: 'auto',
-                        width: 'auto'
-                    }}
-                    style={ButtonStyle.BIG}
-                    submit
-                    text={elementText.buttonText} />
             </Box>
         </>
     );

@@ -2,7 +2,6 @@ import { Typography, TextField } from '@mui/material'
 import { Box, SxProps, Theme } from '@mui/system'
 import { ButtonStyle } from '../../style/ButtonStyle'
 import { ColorPalette } from '../../style/ColorPalette'
-import ConfirmTextFieldAtom from '../atoms/ConfirmTextFieldAtom'
 import { SizeButton } from '../atoms/SizeButton'
 import TextFieldAtom from '../atoms/TextFieldAtom'
 
@@ -32,10 +31,10 @@ const elementText = {
 }
 
 interface ConfirmFormProps {
-    onSubmit: (data: any) => void,
-    amount: "",
-    originAccount: "",
-    recipeAccount: ""
+    onSubmit?: (data: any) => void,
+    amount: number,
+    originAccount: string,
+    recipeAccount: string
 }
 
 const ConfirmTransferUserForm = (props: ConfirmFormProps) => {
@@ -64,7 +63,7 @@ const ConfirmTransferUserForm = (props: ConfirmFormProps) => {
                         }}>
                         {elementText.amount}
                     </Typography>
-                    <ConfirmTextFieldAtom
+                    <TextField
                         id="outlined-basic"
                         label=""
                         color="success"
@@ -84,7 +83,7 @@ const ConfirmTransferUserForm = (props: ConfirmFormProps) => {
                         }}>
                         {elementText.originAccount}
                     </Typography>
-                    <ConfirmTextFieldAtom
+                    <TextField
                         id="outlined-basic"
                         label=""
                         color="success"
@@ -104,7 +103,7 @@ const ConfirmTransferUserForm = (props: ConfirmFormProps) => {
                         }}>
                         {elementText.recipeAccount}
                     </Typography>
-                    <ConfirmTextFieldAtom
+                    <TextField
                         id="outlined-basic"
                         label=""
                         color="success"

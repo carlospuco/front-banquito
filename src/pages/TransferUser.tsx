@@ -6,17 +6,15 @@ import Error404 from './Error404';
 
 const TransferUser = () => {
 
-    const [values, setvalues] = useState<any[] | undefined>([]);
-    const navigate = useNavigate();
+    const [page, setpage] = useState<number>(0);
 
-    const routeChange = () =>{ 
-        const path = 'confirm'; 
-        navigate(path);
-      }
+    const routeChange = () => {
+        setpage(1);
+    }
     return (
         <>
-            <TransferUserForm
-                onSubmit={routeChange} />
+            {page == 0 ? <TransferUserForm onSubmit={routeChange}/> : 
+            <ConfirmTransferUserForm onSubmit={routeChange} amount={12.2} originAccount='123456789' recipeAccount='987654321'/>}
         </>
     )
 }

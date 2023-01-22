@@ -9,6 +9,7 @@ import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreateUser";
 import TransferUser from "./pages/TransferUser";
 import TransferBank from "./pages/TransferBank";
+import ConfirmTransferUserForm from "./components/organisms/ConfirmTransferUserForm";
 
 const App = () => {
   return (
