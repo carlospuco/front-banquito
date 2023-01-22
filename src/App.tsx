@@ -9,12 +9,13 @@ import { Location } from "./pages/UserPages/Locations/Location";
 import { ThemeProvider } from "@mui/material";
 import theme from "./style/Theme";
 import { useState } from "react";
-import AccountCreateUser from "./pages/AccountCreate/AccountCreateUser";
-import TransferUser from "./pages/TransferUser";
-import TransferBank from "./pages/TransferBank";
-import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
-import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
-import Branch from "./pages/ClientPages/Branches/Branch"
+import AccountCreateUser from "./pages/UserPages/AccountCreate/AccountCreateUser";
+import TransferUser from "./pages/UserPages/Transferences/TransferUser";
+import TransferBank from "./pages/ClientPages/Transferences/TransferBank";
+import AccountCreateBank from "./pages/ClientPages/AccountCreate/AccountCreateBank";
+import Branch from "./pages/ClientPages/Branches/Branch";
+import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
+import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 
 const App = () => {
 
@@ -24,7 +25,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Layout isLogged={true} user={{}} />}>
+        <Route path="" element={<Layout isLogged={false} user={{}} />}>
           <Route index element={<Login />} />
           {userRoutes.map((route) => (
             <Route
@@ -62,23 +63,19 @@ const userRoutes = [
     element: <AccountCreateBank />,
   },
   {
-      path: "cuenta/estado",
-    element: <AccountStatement />,
+    path: "cuenta/estado",
+    element: <AccountStatementBank />,
   },
   {
-    path: "transaccion/transferUsuario",
-    element: <TransferUser />,
-  },
-  {
-    path: "transaccion/transferBanco",
+    path: "transaccion",
     element: <TransferBank />,
   }
 ];
 
 const clientRoutes = [
   {
-      path: "",
-    element: <HomeUser />,
+    path: "",
+    element: <HomeClient />,
   },
   {
     path: "cuenta/crear",
@@ -87,7 +84,15 @@ const clientRoutes = [
   {
     path: "sucursales",
     element: <Branch />
-  }
+  },
+  {
+    path: "cuenta/estado",
+    element: <AccountStatementClient />,
+  },
+  {
+    path: "transaccion",
+    element: <TransferUser />,
+  },
 ]
 
 export default App;
