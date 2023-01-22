@@ -26,13 +26,12 @@ const AccountStatementBody = React.forwardRef((props: AccountStatementProps, ref
             <div ref={ref as LegacyRef<HTMLDivElement> | undefined}>
                 {
                     props.accountStatement ?
-                        <Container sx={{ width: '100%' }}>
+                        <Container sx={{ width: '100%', textTransform: 'uppercase' }}>
                             <div style={{
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                                 width: '100%',
                                 color: ColorPalette.SECONDARY,
-                                textTransform: 'uppercase'
                             }}>
                                 <Typography variant='h4'>
                                     Estado de Cuenta
@@ -70,7 +69,6 @@ const AccountStatementBody = React.forwardRef((props: AccountStatementProps, ref
                                         flexDirection: 'column',
                                         height: 110,
                                         padding: 1,
-                                        textTransform: 'uppercase'
                                     }}>
                                         <Box mb={1} sx={{
                                             border: '1px solid',
@@ -111,23 +109,22 @@ const AccountStatementBody = React.forwardRef((props: AccountStatementProps, ref
                                             backgroundColor: ColorPalette.SECONDARY,
                                             color: ColorPalette.ACCENT,
                                             padding: 1,
-                                            textTransform: 'uppercase'
                                         }}>
                                             <Typography variant='body1'>Conciliacion</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Fecha Ultimo Corte</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.lastCutOffDate.toString()}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Fecha este Corte</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.actualCutOffDate.toString()}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Saldo Anterior</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.lastBalance}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Deposito/Créditos   ({props.accountStatement?.transactions.map(transaction => transaction.movement === "CRE").length})</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.transactions.map(transaction => {
                                                 if (transaction.movement === "CRE") {
@@ -135,7 +132,7 @@ const AccountStatementBody = React.forwardRef((props: AccountStatementProps, ref
                                                 }
                                             }).reduce((prev, curr) => (prev || 0) + (curr || 0))}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Retiros/Debitos     ({props.accountStatement?.transactions.map(transaction => transaction.movement === "DEB").length})</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.transactions.map(transaction => {
                                                 if (transaction.movement === "DEB") {
@@ -143,15 +140,15 @@ const AccountStatementBody = React.forwardRef((props: AccountStatementProps, ref
                                                 }
                                             }).reduce((prev, curr) => (prev || 0) + (curr || 0))}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Interes</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.interestRate}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Saldo Actual</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.presentBalance}</Typography>
                                         </Box>
-                                        <Box sx={{ textTransform: 'uppercase', color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <Box sx={{ color: ColorPalette.SECONDARY, padding: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Typography sx={{ width: '50%' }} variant='body1'>Saldo Promedio Efectivo</Typography>
                                             <Typography sx={{ width: '50%' }} variant='body1'>{props.accountStatement?.promBalance}</Typography>
                                         </Box>
@@ -181,11 +178,11 @@ const AccountStatementBody = React.forwardRef((props: AccountStatementProps, ref
                                 </Grid>
                                 <Grid item xs={12} p={5}>
                                     <TableMolecule headers={[
-                                        <Typography sx={{ textTransform: 'uppercase' }}>Fecha</Typography>,
-                                        <Typography sx={{ textTransform: 'uppercase' }}>Movimiento</Typography>,
-                                        <Typography sx={{ textTransform: 'uppercase' }}>Concepto</Typography>,
-                                        <Typography sx={{ textTransform: 'uppercase' }}>Monto</Typography>,
-                                        <Typography sx={{ textTransform: 'uppercase' }}>Saldo</Typography>,]}
+                                        <Typography>Fecha</Typography>,
+                                        <Typography>Movimiento</Typography>,
+                                        <Typography>Concepto</Typography>,
+                                        <Typography>Monto</Typography>,
+                                        <Typography>Saldo</Typography>,]}
                                         rows={props.accountStatement.transactions.map(transaction => {
                                             return getRow(transaction);
                                         })}
