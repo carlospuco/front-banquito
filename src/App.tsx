@@ -6,8 +6,9 @@ import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
+import AccountCreateUser from "./pages/AccountCreate/AccountCreateUser";
+import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
 import Branch from "./pages/ClientPages/Branches/Branch"
-import AccountCreateUser from "./pages/AccountCreateUser";
 import TransferUser from "./pages/TransferUser";
 import TransferBank from "./pages/TransferBank";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
@@ -52,7 +53,11 @@ const userRoutes = [
   },
   {
     path: "cuenta/crear",
-    element: <AccountCreateUser />,
+    element: <AccountCreateBank />,
+  },
+  {
+      path: "cuenta/estado",
+    element: <AccountStatementBank />,
   },
   {
     path: "cuenta/estado",
@@ -66,8 +71,12 @@ const userRoutes = [
 
 const clientRoutes = [
   {
-    path: "",
-    element: <HomeClient />
+      path: "",
+    element: <HomeUser />,
+  },
+  {
+    path: "cuenta/crear",
+    element: <AccountCreateUser />,
   },
   {
     path: "sucursales",
