@@ -12,32 +12,16 @@ import TransferBank from "./pages/TransferBank";
 import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
 import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
 import Branch from "./pages/ClientPages/Branches/Branch"
+import Loader from "./components/molecules/LoadMolecule";
+import { AccountBalance } from '@mui/icons-material';
+import { AssociatedServiceParam } from "./components/organisms/AssocietesServicesParam/AssociatedServiceParam";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="" element={<Layout />}>
-          <Route index element={<Login />} />
-          {userRoutes.map((route) => (
-            <Route
-              key={route.path}
-              path={`usuario/${route.path}`}
-              element={route.element}
-            />
-          ))}
-          {clientRoutes.map((route) => (
-            <Route
-              key={route.path}
-              path={`cliente/${route.path}`}
-              element={route.element}
-            />
-          ))}
-          <Route path="cajero" element={<HomeATM />} />
-        </Route>
-        <Route path="*" element={<Error404 />} />
-      </Routes>
-    </BrowserRouter>
+      <div>
+        <AssociatedServiceParam/>
+        
+      </div>
   );
 };
 
