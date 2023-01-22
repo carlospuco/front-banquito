@@ -8,6 +8,10 @@ import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreate/AccountCreateUser";
 import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
+import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
+import Branch from "./pages/ClientPages/Branches/Branch"
+import TransferUser from "./pages/TransferUser";
+import TransferBank from "./pages/TransferBank";
 
 const App = () => {
   return (
@@ -50,17 +54,33 @@ const userRoutes = [
     path: "cuenta/crear",
     element: <AccountCreateBank />,
   },
+  {
+      path: "cuenta/estado",
+    element: <AccountStatement />,
+  },
+  {
+    path: "transaccion/transferUsuario",
+    element: <TransferUser />,
+  },
+  {
+    path: "transaccion/transferBanco",
+    element: <TransferBank />,
+  }
 ];
 
 const clientRoutes = [
   {
-    path: "",
+      path: "",
     element: <HomeUser />,
   },
   {
     path: "cuenta/crear",
     element: <AccountCreateUser />,
   },
+  {
+    path: "sucursales",
+    element: <Branch />
+  }
 ]
 
 export default App;
