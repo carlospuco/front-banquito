@@ -1,14 +1,15 @@
 import React from "react";
-import { FormControl } from "@mui/material";
+import { FormControl, SxProps } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Theme } from "@emotion/react";
 
 interface DropdownProps {
-  label: string | "Dropdown";
-  items: string[] | ["Item 1", "Item 2", "Item 3"];
-  width: number | 200;
-  height: number | 50;
+  label: string;
+  items: { name: string, value: any }[];
+  width: number | string;
+  height: number | string;
   backgroundColor?: string | "white";
   onChange?: (value: string) => void;
 }
@@ -18,9 +19,10 @@ const formControlStyles = (props: DropdownProps) => ({
   height: props.height,
 });
 
-const selectStyles = (props: DropdownProps) => ({
+const selectStyles = (props: DropdownProps): SxProps<Theme> => ({
   "& .MuiSelect-select": {
     backgroundColor: props.backgroundColor,
+    borderRadius: '10px'
   },
   "& .MuiSelect-icon": {
     color: "white",
@@ -28,12 +30,14 @@ const selectStyles = (props: DropdownProps) => ({
   },
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: props.backgroundColor,
+    borderRadius: '10px'
   },
   "&:hover .MuiOutlinedInput-notchedOutline": {
     borderColor: "white",
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: props.backgroundColor,
+    borderRadius: '10px'
   },
 });
 
@@ -57,8 +61,8 @@ export const Dropdown = (props: DropdownProps) => {
       <InputLabel sx={inputLabelStyles}>{label}</InputLabel>
       <Select sx={selectStyles(props)} label={label} onChange={handleChange}>
         {items.map((item, index) => (
-          <MenuItem key={index} value={item}>
-            {item}
+          <MenuItem key={index} value={item.value}>
+            {item.name}
           </MenuItem>
         ))}
       </Select>

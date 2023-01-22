@@ -9,7 +9,8 @@ interface Props {
     backgroundColor: string,
     accent?: string,
   },
-  onClick: () => void,
+  submit?: boolean
+  onClick?: () => void,
   column?: boolean,
   icon?: any,
   size?: {
@@ -37,7 +38,6 @@ export const SizeButton = (props: Props) => {
           break;
       }
     }
-
     return width;
   }
 
@@ -45,6 +45,7 @@ export const SizeButton = (props: Props) => {
     <>
       <Button
         variant='contained'
+        type={(!!props.submit ? 'submit' : 'button')}
         disableElevation
         sx={{
           backgroundColor: props.palette.backgroundColor,
@@ -52,6 +53,7 @@ export const SizeButton = (props: Props) => {
           borderRadius: "10px",
           transition: "all .3s ease- out",
           width: configureWidth,
+          height: props.size?.height ? props.size.height : 'auto',
           ':hover': {
             backgroundColor: props.palette.accent ? props.palette.accent : 'transparent',
             color: props.palette.backgroundColor,

@@ -14,7 +14,6 @@ interface Props{
 const TextFieldAtom = (props: Props) =>{
     return (
         <TextField
-            className='TextFieldAtom'
             id={props.id}
             label={props.label}
             type={props.type}
