@@ -6,6 +6,7 @@ import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
+import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
 import Branch from "./pages/ClientPages/Branches/Branch"
 import AccountCreateUser from "./pages/AccountCreateUser";
 import TransferUser from "./pages/TransferUser";
@@ -47,6 +48,10 @@ const userRoutes = [
     element: <AccountCreateUser />,
   },
   {
+      path: "cuenta/estado",
+    element: <AccountStatement />,
+  },
+  {
     path: "transaccion/transferUsuario",
     element: <TransferUser />,
   },
@@ -54,7 +59,6 @@ const userRoutes = [
     path: "transaccion/transferBanco",
     element: <TransferBank />,
   }
-
 ];
 
 const clientRoutes = [
