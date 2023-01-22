@@ -1,52 +1,104 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import ConfirmTransferUserForm from '../components/organisms/ConfirmTransferUserForm';
-import TransferBankForm from '../components/organisms/TransferBankForm';
-import TransferBankRecipeForm from '../components/organisms/TransferBankRecipeForm';
-import TransferUserForm from '../components/organisms/TransferUserForm';
-import { AccountService } from '../services/account/accountService';
-import { ProductService } from '../services/product/productService';
-import Error404 from './Error404';
+import ProgressButtonMolecule from '../components/molecules/ProgressButtonMolecule';
+import { ColorPalette } from '../style/ColorPalette';
+import { Transference } from '../services/transference/model/Transference';
+import TransferDataForm from '../components/organisms/TransferDataForm';
+import TransferAmountForm from '../components/organisms/TransferAmountForm';
+import { Box } from '@mui/material';
 
 const TransferBank = () => {
-
-    const [products, setproducts] = useState<any[] | undefined>([]);
+    const [indexForm, setindexForm] = useState<number>(0);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        getProducts("2");
-        return () => { }
-    })
-
-
-    const getProducts = async (id: string) => {
-        const productsAsync = await ProductService.getProducts(id);
-        setproducts(productsAsync);
-    }
-
-    const handleSubmit = (data: any) => {
-        const account = {
-            ...data,
-            codeProductType: "2"
+    const [value, setvalue] = useState<Transference>({
+        accountNumber: "",
+        identification: "",
+        identificationType: "",
+        transferAmount: 0,
+        date: "",
+        recipient: {
+            accountNumber: "",
+            identification: "",
+            identificationType: "",
         }
-        try {
-            saveAccount(account);
-            navigate('/client', { replace: true });
-        } catch (error) {
-            console.log("Something went wrong");
-        }
+    });
 
+    const handleAccept = () => {
+        console.log(value);
+        // navigate('/usuario');
     }
 
-    const saveAccount = async (data: any) => {
-        await AccountService.createAccount(data);
+    const handleDecline = () => {
+        navigate('/usuario');
     }
+
     return (
         <>
-            <TransferBankRecipeForm
-                onSubmit={handleSubmit}
-                products={products ? products : []} />
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <div style={{ marginBottom: 50 }}>
+                    <ProgressButtonMolecule
+                        color={ColorPalette.PRIMARY}
+                        itemsCount={4}
+                        current={indexForm}
+                        onUpdate={(value) => setindexForm(value)}
+                    />
+                </div>
+                <Box sx={{
+                    width: 500,
+                }}>
+                    {indexForm === 0 ?
+                        <TransferDataForm
+                            key={1}
+                            onSubmit={(data: any) => {
+                                setindexForm(1);
+                                setvalue({
+                                    ...value,
+                                    accountNumber: data.accountNumber,
+                                    identification: data.identification,
+                                    identificationType: data.identificationType,
+                                });
+                            }}
+                            title='Cuenta(Emisor)' /> :
+                        indexForm === 1 ?
+                            <TransferDataForm
+                                key={2}
+                                onSubmit={(data: any) => {
+                                    setindexForm(2);
+                                    setvalue({
+                                        ...value,
+                                        recipient: {
+                                            accountNumber: data.accountNumber,
+                                            identification: data.identification,
+                                            identificationType: data.identificationType,
+                                        }
+                                    });
+                                }}
+                                title='Cuenta(Receptor)' /> :
+                            indexForm === 2 ?
+                                <TransferAmountForm
+                                    onSubmit={(data: any) => {
+                                        setindexForm(3);
+                                        setvalue({
+                                            ...value,
+                                            transferAmount: data.amount,
+                                            date: Date.now().toString()
+                                        })
+                                    }} />
+                                :
+                                <ConfirmTransferUserForm
+                                    onAccept={() => handleAccept()}
+                                    onDecline={() => handleDecline()}
+                                    data={value} />}
+                </Box>
+            </div>
         </>
     )
 }

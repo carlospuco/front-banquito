@@ -7,11 +7,11 @@ import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreate/AccountCreateUser";
+import TransferUser from "./pages/TransferUser";
+import TransferBank from "./pages/TransferBank";
 import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
 import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
 import Branch from "./pages/ClientPages/Branches/Branch"
-import TransferUser from "./pages/TransferUser";
-import TransferBank from "./pages/TransferBank";
 
 const App = () => {
   return (
