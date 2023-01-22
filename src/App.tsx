@@ -6,12 +6,13 @@ import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
-import AccountCreateUser from "./pages/AccountCreate/AccountCreateUser";
-import TransferUser from "./pages/TransferUser";
-import TransferBank from "./pages/TransferBank";
-import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
-import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
-import Branch from "./pages/ClientPages/Branches/Branch"
+import AccountCreateUser from "./pages/UserPages/AccountCreate/AccountCreateUser";
+import TransferUser from "./pages/UserPages/Transferences/TransferUser";
+import TransferBank from "./pages/ClientPages/Transferences/TransferBank";
+import AccountCreateBank from "./pages/ClientPages/AccountCreate/AccountCreateBank";
+import Branch from "./pages/ClientPages/Branches/Branch";
+import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
+import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 
 const App = () => {
   return (
@@ -55,23 +56,23 @@ const userRoutes = [
     element: <AccountCreateBank />,
   },
   {
-      path: "cuenta/estado",
-    element: <AccountStatement />,
+    path: "cuenta/estado",
+    element: <AccountStatementBank />,
   },
   {
-    path: "transaccion/transferUsuario",
-    element: <TransferUser />,
+    path: "cuenta/estado",
+    element: <AccountStatementBank />,
   },
   {
-    path: "transaccion/transferBanco",
+    path: "transaccion",
     element: <TransferBank />,
   }
 ];
 
 const clientRoutes = [
   {
-      path: "",
-    element: <HomeUser />,
+    path: "",
+    element: <HomeClient />,
   },
   {
     path: "cuenta/crear",
@@ -80,7 +81,15 @@ const clientRoutes = [
   {
     path: "sucursales",
     element: <Branch />
-  }
+  },
+  {
+    path: "cuenta/estado",
+    element: <AccountStatementClient />,
+  },
+  {
+    path: "transaccion",
+    element: <TransferUser />,
+  },
 ]
 
 export default App;
