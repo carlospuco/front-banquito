@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Error404 from "./pages/Error404";
-import HomeATM from "./pages/HomeATM";
-import HomeClient from "./pages/HomeClient";
+import { Location } from "./pages/UserPages/Locations/Location";
+import theme from "./style/Theme";
+import Error404 from "./pages/ErrorPages/Error404";
+import { ThemeProvider } from "@mui/material";
+import HomeATM from "./pages/ATMPages/HomeATM";
+import HomeClient from "./pages/ClientPages/HomeClient";
 import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
-import Layout from "./templates/Layout";
-import { Location } from "./pages/UserPages/Locations/Location";
+import Layout from "./template/Layout";
 import AccountCreateUser from "./pages/UserPages/AccountCreate/AccountCreateUser";
 import TransferUser from "./pages/UserPages/Transferences/TransferUser";
 import TransferBank from "./pages/ClientPages/Transferences/TransferBank";
@@ -15,30 +18,36 @@ import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStat
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 
 const App = () => {
+
+  const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState({});
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="" element={<Layout />}>
-          <Route index element={<Login />} />
-          {userRoutes.map((route) => (
-            <Route
-              key={route.path}
-              path={`usuario/${route.path}`}
-              element={route.element}
-            />
-          ))}
-          {clientRoutes.map((route) => (
-            <Route
-              key={route.path}
-              path={`cliente/${route.path}`}
-              element={route.element}
-            />
-          ))}
-          <Route path="cajero" element={<HomeATM />} />
-        </Route>
-        <Route path="*" element={<Error404 />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="" element={<Layout isLogged={true} user={{}} />}>
+            <Route index element={<Login />} />
+            {userRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={`usuario/${route.path}`}
+                element={route.element}
+              />
+            ))}
+            {clientRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={`cliente/${route.path}`}
+                element={route.element}
+              />
+            ))}
+            <Route path="cajero" element={<HomeATM />} />
+          </Route>
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 
@@ -54,10 +63,6 @@ const userRoutes = [
   {
     path: "cuenta/crear",
     element: <AccountCreateBank />,
-  },
-  {
-    path: "cuenta/estado",
-    element: <AccountStatementBank />,
   },
   {
     path: "cuenta/estado",
