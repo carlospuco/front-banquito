@@ -4,7 +4,7 @@ import { ProductService } from '../../../services/product/productService';
 import { AccountService } from '../../../services/account/accountService';
 import AccountFormBank from '../../../components/organisms/AccountFormBank';
 import { Avatar, Card, CardContent } from '@mui/material';
-import BanQuitoLogo from '../../assets/BanQuito-Logo.svg'
+import BanQuitoLogo from '../../../assets/BanQuito-Logo.svg'
 import { ColorPalette } from '../../../style/ColorPalette';
 import StripeAtom from '../../../components/atoms/StripeAtom';
 

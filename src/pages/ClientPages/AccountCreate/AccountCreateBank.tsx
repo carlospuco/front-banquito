@@ -7,7 +7,7 @@ import { ColorPalette } from '../../../style/ColorPalette'
 import { Avatar, Box, FormControlLabel, Slide, Switch } from '@mui/material'
 import { ProductService } from '../../../services/product/productService'
 import { AccountService } from '../../../services/account/accountService'
-import BanQuitoLogo from '../../assets/BanQuito-Logo.svg'
+import BanQuitoLogo from '../../../assets/BanQuito-Logo.svg'
 import StripeAtom from '../../../components/atoms/StripeAtom';
 
 
