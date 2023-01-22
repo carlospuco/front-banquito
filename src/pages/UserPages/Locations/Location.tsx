@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { CreateLocation } from "../../../components/organisms/Location/CreateLocation";
 import { LocationTabs } from "../../../components/organisms/Location/LocationTabs";
+import { UpdateLocation } from "../../../components/organisms/Location/UpdateLocation";
 
 const boxStyles = () => ({
   display: "flex",
@@ -24,7 +25,7 @@ export const Location = () => {
       <Box sx={{ width: "80%" }}>
         {tabValue === "Ver" && <div>Ver Componente</div>}
         {tabValue === "Crear" && <CreateLocation />}
-        {tabValue === "Actualizar" && <div>Actualizar Componente</div>}
+        {tabValue === "Actualizar" && <UpdateLocation />}
         {tabValue === "Eliminar" && <div>Eliminar Componente</div>}
       </Box>
     </Box>
