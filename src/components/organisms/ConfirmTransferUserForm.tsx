@@ -1,25 +1,14 @@
 import { Typography, TextField } from '@mui/material'
 import { Box, SxProps, Theme } from '@mui/system'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { ButtonStyle } from '../../style/ButtonStyle'
 import { ColorPalette } from '../../style/ColorPalette'
-import { Dropdown } from '../atoms/Dropdown'
+import ConfirmTextFieldAtom from '../atoms/ConfirmTextFieldAtom'
 import { SizeButton } from '../atoms/SizeButton'
 import TextFieldAtom from '../atoms/TextFieldAtom'
-import IdentificationTypes from './IdentificationType.json'
 
 const mainBoxStyle = (): SxProps<Theme> => {
     return {
         marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    };
-}
-
-const subtitleBoxStyle = (): SxProps<Theme> => {
-    return {
-        marginTop: 3,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -36,22 +25,20 @@ const fieldBoxStyle = (): SxProps<Theme> => {
 
 const elementText = {
     title: 'Cliente',
-    subtitle: 'Información Beneficiario',
     amount: "Monto a transferir",
-    numAccount: "Número de Cuenta",
-    email: "Email (Opcional)",
-    buttonText: 'Transferir',
-    amountPlaceholder: '$xx.xx ',
-    accountPlaceholder: 'xxx xxx xxx xxx',
-    emailPlaceholder: 'ejemplo@ejemplo.com'
+    originAccount: "Cuenta origen",
+    recipeAccount: "Cuenta Destino",
+    buttonText: 'Confirmar Transferencia'
 }
 
-interface AccountFormProps {
+interface ConfirmFormProps {
     onSubmit: (data: any) => void,
-    products: any[],
+    amount: "",
+    originAccount: "",
+    recipeAccount: ""
 }
 
-const ConfirmTransferUserForm = (props: AccountFormProps) => {
+const ConfirmTransferUserForm = (props: ConfirmFormProps) => {
     return (
         <>
             <Box sx={mainBoxStyle()}>
@@ -77,38 +64,12 @@ const ConfirmTransferUserForm = (props: AccountFormProps) => {
                         }}>
                         {elementText.amount}
                     </Typography>
-                    <TextFieldAtom
+                    <ConfirmTextFieldAtom
                         id="outlined-basic"
                         label=""
                         color="success"
                         type="text"
-                        placeholder={elementText.amountPlaceholder}
-                        variant="filled" />
-                </Box>
-                <Typography
-                        sx={
-                            subtitleBoxStyle()
-                        }>
-                        {elementText.subtitle}
-                    </Typography>
-                <Box
-                    sx={
-                        fieldBoxStyle()
-                    }>
-                    <Typography
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center'
-                        }}>
-                        {elementText.numAccount}
-                    </Typography>
-                    <TextFieldAtom
-                        id="outlined-basic"
-                        label=""
-                        color="success"
-                        type="text"
-                        placeholder={elementText.accountPlaceholder}
+                        value={props.amount}
                         variant="filled" />
                 </Box>
                 <Box
@@ -121,14 +82,34 @@ const ConfirmTransferUserForm = (props: AccountFormProps) => {
                             justifyContent: 'flex-start',
                             alignItems: 'center'
                         }}>
-                        {elementText.email}
+                        {elementText.originAccount}
                     </Typography>
-                    <TextFieldAtom
+                    <ConfirmTextFieldAtom
                         id="outlined-basic"
                         label=""
                         color="success"
                         type="text"
-                        placeholder={elementText.emailPlaceholder}
+                        value={props.originAccount}
+                        variant="filled" />
+                </Box>
+                <Box
+                    sx={
+                        fieldBoxStyle()
+                    }>
+                    <Typography
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center'
+                        }}>
+                        {elementText.recipeAccount}
+                    </Typography>
+                    <ConfirmTextFieldAtom
+                        id="outlined-basic"
+                        label=""
+                        color="success"
+                        type="text"
+                        value={props.recipeAccount}
                         variant="filled" />
                 </Box>
                 <Box

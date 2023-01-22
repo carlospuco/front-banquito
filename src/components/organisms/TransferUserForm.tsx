@@ -1,12 +1,11 @@
 import { Typography, TextField } from '@mui/material'
 import { Box, SxProps, Theme } from '@mui/system'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { ButtonStyle } from '../../style/ButtonStyle'
 import { ColorPalette } from '../../style/ColorPalette'
-import { Dropdown } from '../atoms/Dropdown'
 import { SizeButton } from '../atoms/SizeButton'
-import TextFieldAtom from '../atoms/TextFieldAtom'
-import IdentificationTypes from './IdentificationType.json'
+import { useNavigate } from "react-router-dom";
+import ConfirmTransferUserForm from './ConfirmTransferUserForm'
 
 const mainBoxStyle = (): SxProps<Theme> => {
     return {
@@ -33,7 +32,6 @@ const fieldBoxStyle = (): SxProps<Theme> => {
     };
 }
 
-
 const elementText = {
     title: 'Cliente',
     subtitle: 'Información Beneficiario',
@@ -41,16 +39,37 @@ const elementText = {
     numAccount: "Número de Cuenta",
     email: "Email (Opcional)",
     buttonText: 'Transferir',
-    amountPlaceholder: '$xx.xx ',
-    accountPlaceholder: 'xxx xxx xxx xxx',
-    emailPlaceholder: 'ejemplo@ejemplo.com'
 }
 
-interface TransferFormProps {
+interface FormTransferUserInterface {
+    amount: number,
+    originAccount: number,
+    recipeAccount: number
+}
+
+interface TransferFormProps{
     onSubmit: (data: any) => void,
 }
 
 const TransferUserForm = (props: TransferFormProps) => {
+
+    const [transfer, settransfer] = useState<FormTransferUserInterface>({
+        amount: 12.3,
+        originAccount: 123456789,
+        recipeAccount: 987654321,
+    })
+
+    const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        props.onSubmit(transfer);
+    }
+
+    const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        settransfer({ ...transfer, [name]: value });
+    }
+
     return (
         <>
             <Box sx={mainBoxStyle()}>
@@ -65,70 +84,54 @@ const TransferUserForm = (props: TransferFormProps) => {
                     {elementText.title}
                 </Typography>
                 <Box
+                    component="form"
+                    onSubmit={submitHandler}
                     sx={
                         fieldBoxStyle()
                     }>
-                    <Typography
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center'
-                        }}>
-                        {elementText.amount}
-                    </Typography>
-                    <TextFieldAtom
-                        id="outlined-basic"
-                        label=""
-                        color="success"
+                    <TextField
+                        id="monto"
+                        name="monto"
+                        margin="normal"
+                        fullWidth
                         type="text"
-                        placeholder={elementText.amountPlaceholder}
-                        variant="filled" />
+                        onChange={handleFormChange}
+                        label={elementText.amount}
+                        required
+                    />
                 </Box>
-                <Typography
-                        sx={
-                            subtitleBoxStyle()
-                        }>
-                        {elementText.subtitle}
-                    </Typography>
+                
                 <Box
+                    component="form"
+                    onSubmit={submitHandler}
                     sx={
                         fieldBoxStyle()
                     }>
-                    <Typography
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center'
-                        }}>
-                        {elementText.numAccount}
-                    </Typography>
-                    <TextFieldAtom
-                        id="outlined-basic"
-                        label=""
-                        color="success"
-                        type="text"
-                        placeholder={elementText.accountPlaceholder}
-                        variant="filled" />
-                </Box>
-                <Box
+                        <Typography
                     sx={
-                        fieldBoxStyle()
+                        subtitleBoxStyle()
                     }>
-                    <Typography
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center'
-                        }}>
-                        {elementText.email}
-                    </Typography>
-                    <TextFieldAtom
-                        id="outlined-basic"
-                        label=""
-                        color="success"
+                    {elementText.subtitle}
+                </Typography>
+                    <TextField
+                        id="cuenta"
+                        name="cuenta"
+                        margin="normal"
+                        fullWidth
                         type="text"
-                        placeholder={elementText.emailPlaceholder}
-                        variant="filled" />
+                        onChange={handleFormChange}
+                        label={elementText.numAccount}
+                        required
+                    />
+                    <TextField
+                        id="correo"
+                        name="correo"
+                        margin="normal"
+                        fullWidth
+                        type="text"
+                        onChange={handleFormChange}
+                        label={elementText.email}
+                    />
                 </Box>
                 <Box
                     sx={fieldBoxStyle()}>
@@ -142,7 +145,8 @@ const TransferUserForm = (props: TransferFormProps) => {
                         }}
                         style={ButtonStyle.BIG}
                         submit
-                        text={elementText.buttonText} />
+                        text={elementText.buttonText} 
+                        />
                 </Box>
             </Box>
         </>

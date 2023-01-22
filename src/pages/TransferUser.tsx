@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ConfirmTransferUserForm from '../components/organisms/ConfirmTransferUserForm';
 import TransferUserForm from '../components/organisms/TransferUserForm';
-import ConfirmTransferUser from './ConfirmTransferUser';
 import Error404 from './Error404';
 
 const TransferUser = () => {
-    const [products, setproducts] = useState<any[] | undefined>([]);
 
+    const [values, setvalues] = useState<any[] | undefined>([]);
     const navigate = useNavigate();
 
-    const handleSubmit = (data: any) => {
-        try {
-                <Routes>
-                    <Route path="" element={<ConfirmTransferUser />}>
-                    </Route>
-                </Routes>
-        } catch (error) {
-            console.log("Something went wrong");
-        }
-
-    }
+    const routeChange = () =>{ 
+        const path = 'confirm'; 
+        navigate(path);
+      }
     return (
         <>
             <TransferUserForm
-                onSubmit={handleSubmit}/>
+                onSubmit={routeChange} />
         </>
     )
 }

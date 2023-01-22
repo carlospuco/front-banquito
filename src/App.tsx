@@ -8,6 +8,7 @@ import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
 import AccountCreateUser from "./pages/AccountCreateUser";
 import TransferUser from "./pages/TransferUser";
+import TransferBank from "./pages/TransferBank";
 
 const App = () => {
   return (
@@ -47,7 +48,12 @@ const userRoutes = [
   {
     path: "transaccion/transferUsuario",
     element: <TransferUser />,
+  },
+  {
+    path: "transaccion/transferBanco",
+    element: <TransferBank />,
   }
+
 ];
 
 export default App;
