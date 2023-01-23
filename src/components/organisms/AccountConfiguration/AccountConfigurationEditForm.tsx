@@ -28,7 +28,7 @@ const rolItem = [
     }
 ]
 
-const AccountSignatureEditForm = () => {
+const AccountConfigurationEditForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -64,15 +64,6 @@ const AccountSignatureEditForm = () => {
                     items={statusItems}
                 />
             </div>
-            <div style={{ margin: '0.25rem', width: '100%' }}>
-                <Dropdown
-                    backgroundColor={ColorPalette.TERNARY}
-                    height='auto'
-                    width='100%'
-                    label='Rol'
-                    items={rolItem}
-                />
-            </div>
             <SizeButton
                 palette={{ backgroundColor: ColorPalette.PRIMARY }}
                 style={ButtonStyle.MEDIUM}
@@ -82,4 +73,4 @@ const AccountSignatureEditForm = () => {
     )
 }
 
-export default AccountSignatureEditForm
+export default AccountConfigurationEditForm
