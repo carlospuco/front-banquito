@@ -1,22 +1,31 @@
+import { SetMeal } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 import * as React from 'react';
 import { ButtonStyle } from '../../../style/ButtonStyle';
 import { ColorPalette } from '../../../style/ColorPalette';
 import { SizeButton } from '../../atoms/SizeButton';
-import { saveBankEntity } from './FunctionsBank';
-export const BankEntity = () => {
+import { getBankEntity, updateBankEntity } from './FunctionsBank';
+export const UpdateBankEntity = () => {
   const [nameBank, setnameBank] = React.useState('');
   const [codeBank, setcodeBank] = React.useState('');
-  const saveBank = () => { 
-    if (codeBank === '' || nameBank === '') {
-      alert('Debe llenar todos los campos');
-      return;
-    }
-    saveBankEntity (codeBank, nameBank);
+  const updateBank = () => { 
+    updateBankEntity (codeBank, nameBank);
   };
-  return (
+  const getBank = async() => {
+    let listBank = await getBankEntity();
+    console.log(listBank);
+    setBank(listBank[0]);
+    setnameBank(listBank[0].name);
+    setcodeBank(listBank[0].internationalBankCode);
+  };
+  React.useEffect(() => {
+    getBank();
+  }, []);
+  const [bank, setBank] = React.useState<any>(null);
+
+    return (
     <div>
-      <h1>Bienvenido</h1>
+        <h1>INFORMACION DEL {nameBank}</h1>
       <TextField
         id="internacionalBankCode"
         label=""
@@ -25,6 +34,7 @@ export const BankEntity = () => {
         placeholder="Código Internacional de la Entidad Bancaria"
         variant="standard"
         onChange={(e) => { setcodeBank(e.target.value); } }
+        value={codeBank}
       />
       <br></br>
       <TextField
@@ -35,11 +45,12 @@ export const BankEntity = () => {
         placeholder="Nombre de la Entidad Bancaria"
         variant="standard"
         onChange={(e) => { setnameBank(e.target.value); } }
+        value={nameBank}
       />
     <br></br>
-    <SizeButton palette={{ backgroundColor: ColorPalette.BLACK }}
-        onClick={() => saveBank()}
-        text='Crear'
+    <SizeButton palette={{ backgroundColor: ColorPalette.TERNARY }}
+        onClick={() => updateBank()}
+        text='Actualizar'
         style={ButtonStyle.BIG}
     />
     </div>
