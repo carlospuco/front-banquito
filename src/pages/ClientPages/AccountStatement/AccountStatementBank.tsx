@@ -11,8 +11,11 @@ import AccountStatementBody from '../../../components/organisms/AccountStatement
 import ReactToPrint from 'react-to-print'
 import AccountStatementTable from '../../../components/organisms/AccountStatement/AccountStatementTable'
 import { useNavigate } from 'react-router-dom'
+import LoadOrganism from '../../../components/organisms/LoadOrganism'
+import ErrorModalOrganism from '../../../components/organisms/ErrorModalOrganism'
 
 const AccountStatementBank = () => {
+    const [isLoading, setisLoading] = useState<boolean>(false);
     const [activeErrorModal, setactiveErrorModal] = useState<boolean>(false);
     const [errorMessage, seterrorMessage] = useState<string>("");
     const [activeSearchBox, setactiveSearchBox] = useState<boolean>(true);
@@ -20,6 +23,7 @@ const AccountStatementBank = () => {
     const [activeAccountStatementTable, setactiveAccountStatementTable] = useState<boolean>(false);
     const [accountStatement, setaccountStatement] = useState<AccountStament | undefined>();
     const [accountStatements, setaccountStatements] = useState<AccountStament[]>([]);
+    const [accountNumberData, setaccountNumberDate] = useState<string>();
 
     const navigate = useNavigate();
 
@@ -32,6 +36,7 @@ const AccountStatementBank = () => {
     }
 
     const handleSearch = (data: string) => {
+        setaccountNumberDate(data);
         searchAccountStatement(data);
     }
 
@@ -42,6 +47,7 @@ const AccountStatementBank = () => {
     }
 
     const searchAccountStatement = async (accountNumber: string) => {
+        setisLoading(true);
         try {
             const data: AccountStament[] = (await AccountStatementService.getStatements(accountNumber)).data.data || [];
             if (data) {
@@ -54,6 +60,8 @@ const AccountStatementBank = () => {
         } catch (error: any) {
             setactiveErrorModal(true);
             seterrorMessage(error.message);
+        } finally {
+            setisLoading(false);
         }
     }
 
@@ -133,28 +141,15 @@ const AccountStatementBank = () => {
                     </Fade>
                 </div>
             </Box>
-            <Modal
-                open={activeErrorModal}
-                onClose={() => { setactiveErrorModal(false); navigate('/cliente') }}>
-                <Box sx={{
-                    position: 'absolute' as 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: 400,
-                    bgcolor: 'background.paper',
-                    border: '2px solid #000',
-                    boxShadow: 24,
-                    p: 4,
-                }}>
-                    <Typography variant="h6" component="h2" sx={{ textTransform: 'uppercase' }}>
-                        A ocurrido un error
-                    </Typography>
-                    <Typography variant="body2" component="h2">
-                        {errorMessage}
-                    </Typography>
-                </Box>
-            </Modal>
+            <LoadOrganism active={isLoading} />
+            <ErrorModalOrganism
+                active={activeErrorModal}
+                onDeactive={() => { setactiveErrorModal(false); navigate('/cliente') }}
+                text={`${errorMessage}. ¿Desea volver a intentar?`}
+                enableButtonBox
+                onConfirm={() => accountNumberData && searchAccountStatement(accountNumberData)}
+                onReject={() => navigate('/cliente')}
+            />
         </>
     )
 }

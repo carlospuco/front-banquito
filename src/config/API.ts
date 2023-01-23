@@ -1,4 +1,4 @@
-const HOST = "http://localhost:8080"
+const HOST = "http://localhost:9002"
 
 export const GET_ACCOUNT_STATEMENT_API = (accountCode: string) =>
 `${HOST}/api/account/statement/${accountCode}`;
@@ -20,3 +20,11 @@ export const GET_TRANSACTION_CONTROLLER_API = (codeLocalAccount: string, from: s
 
 export const POST_TRANSACTION_API = () =>
 `${HOST}/api/account`;
+export const PUT_TRANSACTION = (codeUniqueTransaction: string) =>
+`${HOST}/api/transaction/${codeUniqueTransaction}`;
+
+export const POST_TRANSACTION = () =>
+`${HOST}/api/transaction`;
+
+export const GET_TRANSACTION = (codeLocalAccount: string, fromDate: Date, toDate: Date) =>
+`${HOST}/api/transaction/${codeLocalAccount}/${fromDate}/${toDate}`;
