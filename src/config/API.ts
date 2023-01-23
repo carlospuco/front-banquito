@@ -20,6 +20,7 @@ export const GET_TRANSACTION_CONTROLLER_API = (codeLocalAccount: string, from: s
 
 export const POST_TRANSACTION_API = () =>
 `${HOST}/api/account`;
+
 export const PUT_TRANSACTION = (codeUniqueTransaction: string) =>
 `${HOST}/api/transaction/${codeUniqueTransaction}`;
 
@@ -28,3 +29,15 @@ export const POST_TRANSACTION = () =>
 
 export const GET_TRANSACTION = (codeLocalAccount: string, fromDate: Date, toDate: Date) =>
 `${HOST}/api/transaction/${codeLocalAccount}/${fromDate}/${toDate}`;
+
+////////////////////////////////////////////////////////////
+export const PUT_ACCOUNT_SIGNATURE_API = (identificationType: string, identification: string, codeLocalAccount: string,
+    codeInternationalAccount: string ) => `${HOST}/api/account/signature/${identificationType}/${identification}/${codeLocalAccount}/${codeInternationalAccount}`;
+
+export const POST_ACCOUNT_SIGNATURE_API = () => `${HOST}/api/account/signature`;
+
+export const GET_ACCOUNT_SIGNATURE_API = (identificationType: string, identification: string) => 
+`${HOST}/api/account/signature/${identificationType}/${identification}`;
+
+export const PUT_STATUS_ACCOUNT_API = (codeLocalAccount: string, codeInternationalAccount: string ) => 
+`${HOST}/api/account/${codeLocalAccount}/${codeInternationalAccount}/status`;
