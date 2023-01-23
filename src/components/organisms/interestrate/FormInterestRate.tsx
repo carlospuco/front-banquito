@@ -12,11 +12,13 @@ import TextFieldAtom from '../../atoms/TextFieldAtom';
 import { Dropdown } from '../../atoms/Dropdown';
 import { SizeButton } from '../../atoms/SizeButton';
 import { ButtonStyle } from '../../../style/ButtonStyle';
+import { string } from 'prop-types';
+import { useEffect, useState } from 'react';
 
 // ContainParent
 export const ContainParent = styled.div`
 display: grid;
-grid-template-columns: 0.5fr 1fr;
+grid-template-columns: 0.6fr 1fr;
 grid-template-rows: repeat(3, 1fr);
 grid-column-gap: 10px;
 grid-row-gap: 2rem;
@@ -25,6 +27,8 @@ justify-content: center;
 align-items: center;
 
 `;
+
+const interestTypes: [{ name: string, value: string }] = [{ name: 'Activo', value: 'ACT' }, { name: 'Pasivo', value: 'PAS' }]
 
 // ContainChild
 export const ContainChild = styled.div`
@@ -66,19 +70,42 @@ max-width: 500px;
 justify-content: space-evenly;
 `;
 export const ContentForm = styled.div`
-margin-left: 9rem;
+    display: grid;
+    justify-items: center;
 `;
 
 export const ContainerForm = styled.div`
-display: inline-table;
-width: 90%;
-padding-top: 20px;
-padding-bottom: 20px;
+    display: flex;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    align-items: center;
+`;
+
+export const Span = styled.span`
+    margin-inline: 1rem;
 `;
 
 
-
 const FormInterestRate = () => {
+
+    const [type, setType] = useState<string>('');
+    const [calcBase, setCalcBase] = useState<string>('');
+    const [name, setName] = useState<string>('');
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
+    const createInterestRate = () => {
+        console.log('createInterestRate');
+    }
+    useEffect(() => {
+        if (type !== '' && calcBase !== '' && name !== '') {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+    }, [type, calcBase, name]);
     return (
         <ContainerForm>
             <ContentForm>
@@ -91,43 +118,41 @@ const FormInterestRate = () => {
                         <span>Nombre:</span>
                     </ContainChild>
                     <ContainChild2>
-                        <TextFieldAtom id="id" label="Nombre tasa de interes" color="primary" type="text" placeholder="id" variant="standard" action={(event) => console.log(event.target.value)} />
+                        <TextFieldAtom id="id" label="Nombre tasa de interes" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setName(event.target.value)} />
                     </ContainChild2>
                     <ContainChild3>
-                        <span>Tipo</span>
+                        <span>Tipo:</span>
                     </ContainChild3>
                     <ContainChild4>
-                        <Dropdown label='Seleccionar' items={[{
-                            name: 'Tasa de interes',
-                            value: 'Tasa de interes'
-                        }, {
-                            name: 'Tasa de interes',
-                            value: 'Tasa de interes'
-                        }]} width={200} height={40}
-                            onChange={(event: { target: { value: any; }; }) => console.log(event.target.value)}
+                        <Dropdown label='Seleccionar' items={interestTypes} width={200} height={40}
+                            onChange={(event) => setType(event.target.value)}
                             backgroundColor={ColorPalette.SECONDARY}
                         />
                     </ContainChild4>
                     <ContainChild5>
-                        <span>Base de Cálculo</span>
+                        <span>Base de Cálculo:</span>
                     </ContainChild5>
                     <ContainChild6>
-                        <TextFieldAtom id="id" label="Base de Cálculo" color="primary" type="text" placeholder="id" variant="standard" action={(event) => console.log(event.target.value)} />
+                        <TextFieldAtom id="id" label="Base de Cálculo" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setCalcBase(event.target.value)} />
                     </ContainChild6>
                 </ContainParent>
                 <ContainerButtons>
-                    <SizeButton palette={{ backgroundColor: ColorPalette.TERNARY }}
-                        icon=''
-                        onClick={() => console.log('Crear')}
-                        text='Crear'
-                        style={ButtonStyle.BIG}
-                    />
-                    <SizeButton palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                        icon=''
-                        onClick={() => console.log('Cancelar')}
-                        text='Cancelar'
-                        style={ButtonStyle.BIG}
-                    />
+                    <Span>
+                        <SizeButton palette={{ backgroundColor: ColorPalette.TERNARY }}
+                            icon=''
+                            onClick={() => createInterestRate()}
+                            text='Crear'
+                            style={ButtonStyle.BIG}
+                        />
+                    </Span>
+                    <Span>
+                        <SizeButton palette={{ backgroundColor: ColorPalette.PRIMARY }}
+                            icon=''
+                            onClick={() => console.log('Cancelar')}
+                            text='Cancelar'
+                            style={ButtonStyle.BIG}
+                        />
+                    </Span>
                 </ContainerButtons>
 
             </ContentForm>

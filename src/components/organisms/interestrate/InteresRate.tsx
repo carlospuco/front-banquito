@@ -13,6 +13,8 @@ import { ColorPalette } from '../../../style/ColorPalette';
 import AddIcon from '@mui/icons-material/Add';
 import { SizeButton } from '../../atoms/SizeButton';
 import { ButtonStyle } from '../../../style/ButtonStyle';
+import FormInterestRate from './FormInterestRate';
+import FormInterestRateLog from './FormInterestRateLog';
 // add circle icon
 
 // Styles
@@ -49,7 +51,7 @@ export const ContentButtonAddRight = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    padding: 20px;
+    margin-top: 1rem;
     `;
 
 // returnButton
@@ -69,6 +71,7 @@ const InteresRate = () => {
 
     const [interesRate, setInteresRate] = useState('');
 
+    
 
     const headers = [
         <Typography>Nombre</Typography>,
@@ -86,7 +89,6 @@ const InteresRate = () => {
     useEffect(() => {
         console.log('interesRate', interesRate);
     }, [interesRate])
-
 
 
     return (

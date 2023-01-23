@@ -9,6 +9,15 @@ import TextFieldAtom from '../../atoms/TextFieldAtom';
 import { Dropdown } from '../../atoms/Dropdown';
 import { ButtonStyle } from '../../../style/ButtonStyle';
 import { SizeButton } from '../../atoms/SizeButton';
+import styled from 'styled-components';
+
+// stilo que envia contenido a la derecha
+const ContentFormLog = styled(ContentForm)`
+    justify-content: flex-end;
+`;
+
+
+
 const FormInterestRateLog = () => {
     return (
         <ContainerForm>
