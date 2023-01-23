@@ -9,6 +9,7 @@ interface Props{
     placeholder: string;
     variant: any;
     action: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string;
 }
 
 const TextFieldAtom = (props: Props) =>{
@@ -21,6 +22,7 @@ const TextFieldAtom = (props: Props) =>{
             variant={props.variant}
             color={props.color}
             onChange={props.action}
+            value={props.value}
             >
         </TextField>
 

@@ -26,6 +26,7 @@ display: relative;
     width: 90%;
     padding-top: 20px;
     padding-bottom: 20px;
+    margin-top: 3rem;
     `;
 
 export const Content = styled.div`
@@ -40,7 +41,7 @@ export const SearchContainer = styled.div`
     width: 100%;
     height: 100%;
     padding: 20px;
-    max-width: 500px;
+    max-width: 360px;
     margin-bottom: 2rem;
     margin-top: 2rem;
     `;
@@ -62,6 +63,7 @@ export const ReturnButton = styled.div`
     justify-content: left;
     position: absolute;
     margin: 1rem;
+    margin-top: 4rem;
     left: 0;
     top: 0;
     `;

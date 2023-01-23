@@ -17,6 +17,7 @@ import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 import BranchUser from "./pages/UserPages/Branches/BranchUser";
+import InterestRateLog from "./components/organisms/interestrate/InterestRateLog";
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>
+      <InterestRateLog />
     </ThemeProvider>
   );
 };

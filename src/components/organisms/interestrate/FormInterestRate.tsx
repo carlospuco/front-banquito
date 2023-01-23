@@ -14,7 +14,10 @@ import { SizeButton } from '../../atoms/SizeButton';
 import { ButtonStyle } from '../../../style/ButtonStyle';
 import { string } from 'prop-types';
 import { useEffect, useState } from 'react';
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import InterestRateService from '../../../services/product/interestrate/interestRate.service';
+import IInterestRateAdd from '../../../services/product/models/interestRate.model';
 // ContainParent
 export const ContainParent = styled.div`
 display: grid;
@@ -72,6 +75,7 @@ justify-content: space-evenly;
 export const ContentForm = styled.div`
     display: grid;
     justify-items: center;
+    margin-top: 2rem;
 `;
 
 export const ContainerForm = styled.div`
@@ -88,16 +92,60 @@ export const ContainerForm = styled.div`
 export const Span = styled.span`
     margin-inline: 1rem;
 `;
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
+interface FormInterestRateProps {
+    action: () => void;
+    setValue: (value:boolean) => void;
+    isCreate: boolean;
+}
 
-const FormInterestRate = () => {
+const FormInterestRate = ({
+    action, setValue, isCreate
+}: FormInterestRateProps) => {
 
     const [type, setType] = useState<string>('');
     const [calcBase, setCalcBase] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
-    const createInterestRate = () => {
-        console.log('createInterestRate');
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const [severity, setSeverity] = React.useState<any>('success');
+    const createInterestRate = async () => {
+        if (isDisabled) {
+            setMessage('Debe llenar todos los campos');
+            setSeverity('error');
+            setOpen(true);
+        } else {
+            console.log('createInterestRate')
+            let data: IInterestRateAdd = {
+                name: name,
+                type: type,
+                calcBase: calcBase
+            }
+            let response = await InterestRateService.addInterestRate(data);
+            if (response.status === 200) {
+                setMessage('Tasa de interes creada correctamente');
+                setSeverity('success');
+                setOpen(true);
+                setValue(!isCreate);
+                // setear los valores
+                setType('');
+                setCalcBase('');
+                setName('');
+
+            } else {
+                setMessage('Error al crear la tasa de interes');
+                setSeverity('error');
+                setOpen(true);
+            }
+
+        }
     }
     useEffect(() => {
         if (type !== '' && calcBase !== '' && name !== '') {
@@ -106,11 +154,13 @@ const FormInterestRate = () => {
             setIsDisabled(true);
         }
     }, [type, calcBase, name]);
+
+
     return (
         <ContainerForm>
             <ContentForm>
                 <ReturnButton>
-                    <ButtonIcon color={ColorPalette.PRIMARY} icon={<KeyboardBackspaceIcon />} onClick={() => console.log('Buscar')} top={true} />
+                    <ButtonIcon color={ColorPalette.PRIMARY} icon={<KeyboardBackspaceIcon />} onClick={() => action()} top={true} />
                 </ReturnButton>
                 <h1>Formulario de Tasa de Interes</h1>
                 <ContainParent>
@@ -118,14 +168,14 @@ const FormInterestRate = () => {
                         <span>Nombre:</span>
                     </ContainChild>
                     <ContainChild2>
-                        <TextFieldAtom id="id" label="Nombre tasa de interes" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setName(event.target.value)} />
+                        <TextFieldAtom id="id" value={name} label="Nombre tasa de interes" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setName(event.target.value)} />
                     </ContainChild2>
                     <ContainChild3>
                         <span>Tipo:</span>
                     </ContainChild3>
                     <ContainChild4>
                         <Dropdown label='Seleccionar' items={interestTypes} width={200} height={40}
-                            onChange={(event) => setType(event.target.value)}
+                            onChange={(value: string) => setType(value)}
                             backgroundColor={ColorPalette.SECONDARY}
                         />
                     </ContainChild4>
@@ -133,7 +183,7 @@ const FormInterestRate = () => {
                         <span>Base de Cálculo:</span>
                     </ContainChild5>
                     <ContainChild6>
-                        <TextFieldAtom id="id" label="Base de Cálculo" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setCalcBase(event.target.value)} />
+                        <TextFieldAtom id="id" value={calcBase} label="Base de Cálculo" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setCalcBase(event.target.value)} />
                     </ContainChild6>
                 </ContainParent>
                 <ContainerButtons>
@@ -148,7 +198,7 @@ const FormInterestRate = () => {
                     <Span>
                         <SizeButton palette={{ backgroundColor: ColorPalette.PRIMARY }}
                             icon=''
-                            onClick={() => console.log('Cancelar')}
+                            onClick={() => action()}
                             text='Cancelar'
                             style={ButtonStyle.BIG}
                         />
@@ -156,6 +206,14 @@ const FormInterestRate = () => {
                 </ContainerButtons>
 
             </ContentForm>
+            <Snackbar open={open} autoHideDuration={5000}
+                onClose={() => setOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            >
+                <Alert severity={severity} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
         </ContainerForm>
     )
 }

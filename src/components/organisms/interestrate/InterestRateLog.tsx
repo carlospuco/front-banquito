@@ -24,6 +24,10 @@ import { useEffect } from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FormInterestRateLog from './FormInterestRateLog';
 import FormInterestRate from './FormInterestRate';
+// info icon
+import InfoIcon from '@mui/icons-material/Info';
+import Tooltip from '@mui/material/Tooltip';
+import IInterestRateStatus from '../../../services/product/models/interestRate.model';
 
 
 const InterestRateLog = () => {
@@ -46,6 +50,7 @@ const InterestRateLog = () => {
     const [name, setName] = useState<string>('');
     const [isActiveAddValue, setIsActiveAddValue] = useState(false);
     const [isActiveAddInteresRate, setIsActiveAddInteresRate] = useState(false);
+    const [isCreateData, setIsCreateData] = useState(false);
 
     const returnButtonForms = () => {
         setIsActiveAddInteresRate(false);
@@ -86,7 +91,7 @@ const InterestRateLog = () => {
             getInteretRateListByName();
         }
 
-    }, [name])
+    }, [name, isCreateData])
 
 
 
@@ -108,6 +113,18 @@ const InterestRateLog = () => {
         </Typography>
     ];
 
+    const changeStatus = async (interestRate: any, status: string) => {
+        interestRate.status = status;
+        let data: IInterestRateStatus = {
+            id: interestRate.id,
+            status: interestRate.status
+        }
+
+        let response = await InterestRateService.updateInterestRateStatus(data);
+        console.log(response);
+        getInteretRateList();
+    }
+
     const row = (interestList: any) => {
         let rows = interestList.map((interestRate: IInterestRate) => {
             return [
@@ -121,11 +138,30 @@ const InterestRateLog = () => {
                     {interestRate.calcBase}
                 </Typography>,
                 <Typography>
-                    {interestRate.value}
+                    {interestRate.value ? interestRate.value :
+                        <Tooltip title="Agregue un valor de tasa de interés">
+                            <InfoIcon color='secondary' />
+                        </Tooltip>}
                 </Typography>,
                 <Typography>
-                    <ButtonIcon color={ColorPalette.PRIMARY} icon={<CheckIcon />} onClick={() => console.log('Buscar')} top={true} />
-                    <ButtonIcon color={ColorPalette.PRIMARY} icon={<CloseIcon />} onClick={() => console.log('Buscar')} top={true} />
+                    {interestRate.status == 'ACT' ?
+                        <SizeButton palette={{ backgroundColor: ColorPalette.PRIMARY }}
+                            icon={<CloseIcon />}
+                            text="Deshabilitar"
+                            onClick={() => { changeStatus(interestRate, 'INA') }}
+                            style={ButtonStyle.MEDIUM}
+                        /> : interestRate.status == 'INA' ?
+                            <SizeButton palette={{ backgroundColor: ColorPalette.TERNARY }}
+                                icon={<CheckIcon />}
+                                text="Habilitar"
+                                onClick={() => { changeStatus(interestRate, 'ACT') }}
+                                style={ButtonStyle.MEDIUM}
+                            /> :
+                            <Tooltip title="Agregue un valor de tasa de interés">
+                                <InfoIcon color='secondary' />
+                            </Tooltip>
+                    }
+
                 </Typography>
             ]
         })
@@ -136,13 +172,19 @@ const InterestRateLog = () => {
 
     if (isActiveAddValue) {
         return (
-            <FormInterestRateLog />
+            <FormInterestRateLog action={returnButtonForms}
+                setVal={(val: boolean) => { setIsCreateData(val) }}
+                isCreate={isCreateData}
+            />
         )
     }
 
     if (isActiveAddInteresRate) {
         return (
-            <FormInterestRate />
+            <FormInterestRate action={returnButtonForms}
+                setValue={(val: boolean) => { setIsCreateData(val) }}
+                isCreate={isCreateData}
+            />
         )
     }
 
@@ -158,13 +200,8 @@ const InterestRateLog = () => {
                 {/* Buscar tasa de interes */}
                 <div>
                     <SearchContainer>
-                        <span>Nombre: </span>
+                        <span>Buscar por Nombre: </span>
                         <TextFieldAtom id="id" label="Nombre tasa de interes" color="primary" type="text" placeholder="id" variant="standard" action={(event) => setName(event.target.value)} />
-                        <SizeButton palette={{ backgroundColor: ColorPalette.PRIMARY }}
-                            icon={<SearchIcon />}
-                            onClick={() => console.log('Buscar')}
-                            text="Buscar"
-                            style={ButtonStyle.MEDIUM} />
                     </SearchContainer>
                     <ContentButtonAddRight>
                         <ButtonIcon color={ColorPalette.TERNARY} icon={<AddCircleIcon />} onClick={() => addValue()} top={true} />
