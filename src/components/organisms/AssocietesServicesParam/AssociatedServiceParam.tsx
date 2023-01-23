@@ -11,6 +11,23 @@ import TableMolecule from "../../molecules/TableMolecule";
 import ButtonIcon from "../../atoms/ButtonIcon";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import { associatedServiceParamService } from "../../../services/product/AssociatedServiceParamService";
+import { AssociatedService } from "../../../services/product/Model/AssociatedService";
+import Modal from "@mui/material/Modal";
+import React from "react";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  bgcolor: "background.paper",
+  border: "none",
+  boxShadow: 24,
+  p: 4,
+};
 
 export const SearchContainer = styled.div`
   display: flex;
@@ -40,8 +57,29 @@ interface Props {
   openDialog: boolean;
 }
 
-export const AssociatedServiceParam = ({ openDialog }: Props) => {
-  const [open, setOpen] = useState(openDialog);
+export const AssociatedServiceParam = () => {
+  const [first, setfirst] = useState<any[]>([]);
+  useEffect(() => {
+    console.log("hola");
+
+    const callFun = async () => {
+      console.log("1");
+      const fun = await associatedServiceParamService();
+      console.log("2");
+      setfirst(fun.data.map((data) => data.params));
+      console.log("carlos");
+    };
+    return () => {};
+  }, []);
+
+  const mapFirst = () => {
+    return first.map((data) => {
+      return [
+        <Typography>{data.name}</Typography>,
+        <Typography>{data.valueType}</Typography>,
+      ];
+    });
+  };
 
   const headersMock = [
     <Typography>Parametro ID</Typography>,
@@ -68,13 +106,10 @@ export const AssociatedServiceParam = ({ openDialog }: Props) => {
     ],
   ];
 
-  useEffect(() => {
-    if (openDialog) {
-      setOpen(true);
-    }
-  }, [openDialog]);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
- 
   return (
     <Container>
       <SearchContainer>
@@ -96,11 +131,11 @@ export const AssociatedServiceParam = ({ openDialog }: Props) => {
         />
       </SearchContainer>
       <Container>
-        <TableMolecule headers={headersMock} rows={rowsMock} />
+        <TableMolecule headers={headersMock} rows={mapFirst()} />
         <ButtonIcon
           color={ColorPalette.PRIMARY}
           icon={<ControlPointIcon />}
-          onClick={() => console.log("Crear")}
+          onClick={() => handleOpen()}
           top={true}
         />
         <SizeButton
@@ -110,6 +145,58 @@ export const AssociatedServiceParam = ({ openDialog }: Props) => {
           style={ButtonStyle.MEDIUM}
         />
       </Container>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Agregar Parametro de Servicio Asociado
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Container>
+            <div>
+              <SearchContainer>
+              <span>Nombre:</span>
+              <TextFieldAtom
+                id="id"
+                label="Parametro Asociado"
+                color="primary"
+                type="text"
+                placeholder="nombre"
+                variant="standard"
+              />
+              </SearchContainer>
+            </div>
+            <div>
+              <span>Tipo de Dato: </span>
+              <Dropdown
+                label="Tipo de Dato"
+                items={[
+                  { name: "TEX", value: "string" },
+                  { name: "DAT", value: "date" },
+                  { name: "NUM", value: "number" },
+                  { name: "DEC", value: "float" },
+                ]}
+                width={200}
+                height={50}
+                selectedTextColor={ColorPalette.BLACK}
+              />
+            </div>
+            <Container>
+              <SizeButton
+                palette={{ backgroundColor: ColorPalette.PRIMARY }}
+                onClick={() => console.log("Guardar")}
+                text="Guardar"
+                style={ButtonStyle.MEDIUM}
+              />
+            </Container>
+            </Container>
+          </Typography>
+        </Box>
+      </Modal>
     </Container>
   );
 };
