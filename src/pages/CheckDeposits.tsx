@@ -104,7 +104,7 @@ const CheckDeposits = () => {
                         <Typography>Tipo de Identificación</Typography>
                         <Dropdown
                             label=""
-                            items={mockedItems}
+                            items={[]}
                             width={300}
                             height={50}
                             backgroundColor="lightblue"
