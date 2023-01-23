@@ -7,9 +7,18 @@ import { ButtonStyle } from '../style/ButtonStyle';
 import { ColorPalette } from '../style/ColorPalette';
 
 const Withdrawals = () => {
-    const mockedItems = ["Cédula", "RUC", "Pasaporte"];
+    const mockedItems = [{
+        name: 'DNI',
+        value: 'DNI'
+    }, {
+        name: 'RUC',
+        value: 'RUC'
+    }, {
+        name: 'PASAPORTE',
+        value: 'PAS'
+    }];
 
-    const [selectedItem, setSelectedItem] = useState<string>(mockedItems[0]);
+    const [selectedItem, setSelectedItem] = useState<string>(mockedItems[0].value);
 
     const handleDropdownChange = (value: string) => setSelectedItem(value);
 
