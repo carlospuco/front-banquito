@@ -20,7 +20,7 @@ import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 import BranchUser from "./pages/UserPages/Branches/BranchUser";
-import InterestRateLog from "./components/organisms/interestrate/InterestRateLog";
+import InterestRateLog from './components/organisms/interestrate/InterestRateLog';
 
 const App = () => {
 
@@ -48,11 +48,17 @@ const App = () => {
               />
             ))}
             <Route path="cajero" element={<HomeATM />} />
+            {productRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={`producto/${route.path}`}
+                element={route.element}
+              />
+            ))}
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>
-      <InterestRateLog />
     </ThemeProvider>
   );
 };
@@ -116,6 +122,17 @@ const clientRoutes = [
   {
     path: "transaccion",
     element: <TransferUser />,
+  },
+]
+
+const productRoutes = [
+  {
+    path: "interest-rate",
+    element: <InterestRateLog />,
+  },
+  {
+    path: "agregar/tipo-de-producto",
+    element: <AccountCreateUser />,
   },
 ]
 
