@@ -16,6 +16,7 @@ import AccountCreateBank from "./pages/ClientPages/AccountCreate/AccountCreateBa
 import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
+import BranchUser from "./pages/UserPages/Branches/BranchUser";
 
 const App = () => {
 
@@ -71,6 +72,10 @@ const userRoutes = [
   {
     path: "transaccion",
     element: <TransferBank />,
+  },
+  {
+    path: "sucursales",
+    element: <BranchUser />,
   }
 ];
 
