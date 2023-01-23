@@ -9,10 +9,11 @@ import { Wallet } from '@mui/icons-material';
 
 const mainBoxStyle = (): SxProps<Theme> => {
     return {
-        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 8
     };
 }
 
@@ -44,7 +45,8 @@ const SelectAccountTypeForm = (props: SelectAccountFormProps) => {
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        marginBottom: 2
                     }}>
                     Seleccione el tipo de cuenta
                 </Typography>
@@ -85,7 +87,7 @@ const SelectAccountTypeForm = (props: SelectAccountFormProps) => {
                             text='Corriente'
                             column
                             icon={<AccountBalance
-                                
+
                                 sx={iconStyle()} />}
                             size={buttonSize()}
                         />

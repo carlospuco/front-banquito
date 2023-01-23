@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { ProductService } from '../services/product/productService';
+import ConfirmTransferUserForm from '../components/organisms/ConfirmTransferUserForm';
+import TransferBankForm from '../components/organisms/TransferBankForm';
+import TransferBankRecipeForm from '../components/organisms/TransferBankRecipeForm';
+import TransferUserForm from '../components/organisms/TransferUserForm';
 import { AccountService } from '../services/account/accountService';
-import AccountFormBank from '../components/organisms/AccountFormBank';
+import { ProductService } from '../services/product/productService';
+import Error404 from './Error404';
 
-const AccountCreateUser = () => {
+const TransferBank = () => {
+
     const [products, setproducts] = useState<any[] | undefined>([]);
 
     const navigate = useNavigate();
@@ -39,11 +44,11 @@ const AccountCreateUser = () => {
     }
     return (
         <>
-            <AccountFormBank
+            <TransferBankRecipeForm
                 onSubmit={handleSubmit}
                 products={products ? products : []} />
         </>
     )
 }
 
-export default AccountCreateUser
+export default TransferBank
