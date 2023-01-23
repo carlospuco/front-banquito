@@ -58,22 +58,50 @@ interface Props {
 }
 
 export const AssociatedServiceParam = () => {
-  const [first, setfirst] = useState<any[]>([]);
+  const [first, setfirst] = useState<any>(null);
+  const [item, setItem] = useState<any>([
+    [
+        <Typography>
+        </Typography>,
+        <Typography>
+        </Typography>,
+        <Typography>
+        </Typography>,
+             ]
+]);
+  
   useEffect(() => {
-    console.log("hola");
-
     const callFun = async () => {
-      console.log("1");
-      const fun = await associatedServiceParamService();
-      console.log("2");
-      setfirst(fun.data.map((data) => data.params));
-      console.log("carlos");
+      let fun = await associatedServiceParamService()
+      let value = fun.map((items: any) =>{
+        console.log(items.params)
+        return items.params;
+        })
+        console.log(value)
+      setfirst(value);
+      setItem(mapFirst(value));
+      console.log(item)
+      let row=value.map((data:any)=>{
+        return[
+          <Typography>{data.name}</Typography>,
+          <Typography>{data.valueType}</Typography>,
+          <Typography>h</Typography>,
+        ];
+      })
+      console.log(row)
+      setItem(row)
+      
+      //setfirst(fun.data.map((data) =>{
+      //return data.params;
+      //}));
+      //setItem(mapFirst());
+      //console.log(mapFirst());
     };
-    return () => {callFun()};
-  }, [first]);
+    callFun();
+  }, []);
 
-  const mapFirst = () => {
-    return first.map((data) => {
+  const mapFirst = (value: any) => {
+    return value.map((data: any) => {
       return [
         <Typography>{data.name}</Typography>,
         <Typography>{data.valueType}</Typography>,
@@ -131,7 +159,7 @@ export const AssociatedServiceParam = () => {
         />
       </SearchContainer>
       <Container>
-        <TableMolecule headers={headersMock} rows={mapFirst()} />
+        <TableMolecule headers={headersMock} rows={item} />
         <ButtonIcon
           color={ColorPalette.PRIMARY}
           icon={<ControlPointIcon />}
