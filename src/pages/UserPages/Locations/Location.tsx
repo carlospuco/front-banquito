@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CreateLocation } from "../../../components/organisms/Location/CreateLocation";
 import { LocationTabs } from "../../../components/organisms/Location/LocationTabs";
 import { UpdateLocation } from "../../../components/organisms/Location/UpdateLocation";
+import { DeleteLocation } from "../../../components/organisms/Location/DeleteLocation";
 
 const boxStyles = () => ({
   display: "flex",
@@ -26,7 +27,7 @@ export const Location = () => {
         {tabValue === "Ver" && <div>Ver Componente</div>}
         {tabValue === "Crear" && <CreateLocation />}
         {tabValue === "Actualizar" && <UpdateLocation />}
-        {tabValue === "Eliminar" && <div>Eliminar Componente</div>}
+        {tabValue === "Eliminar" && <DeleteLocation />}
       </Box>
     </Box>
   );
