@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { ColorPalette } from '../../../style/ColorPalette';
 import { ProductService } from '../../../services/product/productService';
 import { AccountService } from '../../../services/account/accountService';
-import { Avatar, Card, CardContent } from '@mui/material';
+import { Avatar, Box, Card, CardContent, Modal, Typography } from '@mui/material';
 import StripeAtom from '../../../components/atoms/StripeAtom';
 import BanQuitoLogo from '../../../assets/BanQuito-Logo.svg'
 import AccountFormBank from '../../../components/organisms/AccountFormBank';
+import { AccountPost } from '../../../services/account/model/AccountPost';
 
 const AccountCreateUser = () => {
     const [products, setproducts] = useState<any[] | undefined>([]);
+    const [activeErrorModal, setactiveErrorModal] = useState<boolean>(false);
+    const [errorMessage, seterrorMessage] = useState<string>("");
 
     const navigate = useNavigate();
 
@@ -28,19 +31,19 @@ const AccountCreateUser = () => {
         const account = {
             ...data,
             codeProductType: "2"
-        }
-        try {
-            saveAccount(account);
-            navigate('/cliente', { replace: true });
-        } catch (error) {
-            console.log("Something went wrong");
-        }
-
+        };
+        saveAccount(account);
     }
 
     const saveAccount = async (data: any) => {
-        await AccountService.createAccount(data);
+        try {
+            await AccountService.postAccount(data);
+        } catch (error: any) {
+            setactiveErrorModal(true);
+            seterrorMessage(error.message);
+        }
     }
+
     return (
         <>
             <div style={{
@@ -76,6 +79,28 @@ const AccountCreateUser = () => {
                     </div>
                 </Card>
             </div>
+            <Modal
+                open={activeErrorModal}
+                onClose={() => { setactiveErrorModal(false); navigate('/cliente') }}>
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <Typography variant="h6" component="h2" sx={{ textTransform: 'uppercase' }}>
+                        A ocurrido un error
+                    </Typography>
+                    <Typography variant="body2" component="h2">
+                        {errorMessage}
+                    </Typography>
+                </Box>
+            </Modal>
         </>
     )
 }

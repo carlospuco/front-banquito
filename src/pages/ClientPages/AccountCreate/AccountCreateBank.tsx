@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ColorPalette } from '../../../style/ColorPalette'
 import { ProductService } from '../../../services/product/productService'
 import { AccountService } from '../../../services/account/accountService'
-import { Avatar, Slide } from '@mui/material'
+import { Avatar, Box, Modal, Slide, Typography } from '@mui/material'
 import AccountFormBank from '../../../components/organisms/AccountFormBank'
 import SelectAccountTypeForm from '../../../components/organisms/SelectAccountTypeForm'
 import ProgressButtonMolecule from '../../../components/molecules/ProgressButtonMolecule'
@@ -12,6 +12,8 @@ import StripeAtom from '../../../components/atoms/StripeAtom';
 
 
 const AccountCreateBank = () => {
+  const [activeErrorModal, setactiveErrorModal] = useState<boolean>(false);
+  const [errorMessage, seterrorMessage] = useState<string>("");
   const [indexForm, setindexForm] = useState<number>(0)
   const [selectedAccount, setselectedAccount] = useState<string>("");
   const [products, setproducts] = useState<any[] | undefined>([]);
@@ -32,19 +34,18 @@ const AccountCreateBank = () => {
   const handleSubmit = (data: any) => {
     const account = {
       ...data,
-      codeProductType: selectedAccount
-    }
-    try {
-      saveAccount(account);
-      navigate('/usuario', { replace: true });
-    } catch (error) {
-      console.log("Something went wrong");
-    }
-
+      codeProductType: "2"
+    };
+    saveAccount(account);
   }
 
   const saveAccount = async (data: any) => {
-    await AccountService.createAccount(data);
+    try {
+      await AccountService.postAccount(data);
+    } catch (error: any) {
+      setactiveErrorModal(true);
+      seterrorMessage(error.message);
+    }
   }
 
   return (
@@ -120,7 +121,28 @@ const AccountCreateBank = () => {
           </Slide>
         </div>
       </div>
-
+      <Modal
+        open={activeErrorModal}
+        onClose={() => { setactiveErrorModal(false); navigate('/usuario') }}>
+        <Box sx={{
+          position: 'absolute' as 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        }}>
+          <Typography variant="h6" component="h2" sx={{ textTransform: 'uppercase' }}>
+            A ocurrido un error
+          </Typography>
+          <Typography variant="body2" component="h2">
+            {errorMessage}
+          </Typography>
+        </Box>
+      </Modal>
     </>
   )
 }
