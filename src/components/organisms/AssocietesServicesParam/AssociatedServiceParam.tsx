@@ -1,4 +1,4 @@
-import React from "react";
+import { useState} from "react";
 import { SizeButton } from "../../atoms/SizeButton";
 import TextFieldAtom from "../../atoms/TextFieldAtom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -35,6 +35,13 @@ export const Container = styled.div`
   padding-bottom: 20px;
   margin-left: 60px;
 `;
+
+
+interface ModalType {
+  children?:React.ReactNode;
+  isOpen: boolean;
+  toggle: () => void;
+}
 
 export const AssociatedServiceParam = () => {
   const headersMock = [
