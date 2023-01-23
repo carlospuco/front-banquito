@@ -8,16 +8,20 @@ import StripeAtom from '../../../components/atoms/StripeAtom';
 import BanQuitoLogo from '../../../assets/BanQuito-Logo.svg'
 import AccountFormBank from '../../../components/organisms/AccountFormBank';
 import { AccountPost } from '../../../services/account/model/AccountPost';
+import ErrorModalOrganism from '../../../components/organisms/ErrorModalOrganism';
+import LoadOrganism from '../../../components/organisms/LoadOrganism';
 
 const AccountCreateUser = () => {
+    const [isLoading, setisLoading] = useState<boolean>(false);
     const [products, setproducts] = useState<any[] | undefined>([]);
     const [activeErrorModal, setactiveErrorModal] = useState<boolean>(false);
     const [errorMessage, seterrorMessage] = useState<string>("");
+    const [accountData, setaccountData] = useState<any>();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        getProducts("2");
+        getProducts("6c24027751bc43c5b232242e307880a7");
         return () => { }
     })
 
@@ -32,15 +36,20 @@ const AccountCreateUser = () => {
             ...data,
             codeProductType: "2"
         };
+        setaccountData(account);
         saveAccount(account);
+
     }
 
     const saveAccount = async (data: any) => {
+        setisLoading(true);
         try {
             await AccountService.postAccount(data);
         } catch (error: any) {
             setactiveErrorModal(true);
             seterrorMessage(error.message);
+        } finally {
+            setisLoading(false);
         }
     }
 
@@ -79,28 +88,15 @@ const AccountCreateUser = () => {
                     </div>
                 </Card>
             </div>
-            <Modal
-                open={activeErrorModal}
-                onClose={() => { setactiveErrorModal(false); navigate('/cliente') }}>
-                <Box sx={{
-                    position: 'absolute' as 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: 400,
-                    bgcolor: 'background.paper',
-                    border: '2px solid #000',
-                    boxShadow: 24,
-                    p: 4,
-                }}>
-                    <Typography variant="h6" component="h2" sx={{ textTransform: 'uppercase' }}>
-                        A ocurrido un error
-                    </Typography>
-                    <Typography variant="body2" component="h2">
-                        {errorMessage}
-                    </Typography>
-                </Box>
-            </Modal>
+            <LoadOrganism active={isLoading} />
+            <ErrorModalOrganism
+                active={activeErrorModal}
+                onDeactive={() => { setactiveErrorModal(false); navigate('/cliente') }}
+                text={`${errorMessage}. ¿Desea volver a intentar?`}
+                enableButtonBox
+                onConfirm={() => saveAccount(accountData)}
+                onReject={() => navigate('/cliente')}
+            />
         </>
     )
 }
