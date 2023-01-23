@@ -6,10 +6,12 @@ import HomeUser from "./pages/UserPages/HomeUser";
 import Login from "./pages/Login";
 import Layout from "./templates/Layout";
 import { Location } from "./pages/UserPages/Locations/Location";
-import AccountCreateUser from "./pages/AccountCreateUser";
+import AccountCreateUser from "./pages/AccountCreate/AccountCreateUser";
 import TransferUser from "./pages/TransferUser";
 import TransferBank from "./pages/TransferBank";
-import ConfirmTransferUserForm from "./components/organisms/ConfirmTransferUserForm";
+import AccountCreateBank from "./pages/AccountCreate/AccountCreateBank";
+import AccountStatement from "./pages/UserPages/AccountStatement/AccountStatementPage";
+import Branch from "./pages/ClientPages/Branches/Branch"
 
 const App = () => {
   return (
@@ -24,7 +26,13 @@ const App = () => {
               element={route.element}
             />
           ))}
-          <Route path="cliente" element={<HomeClient />} />
+          {clientRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={`cliente/${route.path}`}
+              element={route.element}
+            />
+          ))}
           <Route path="cajero" element={<HomeATM />} />
         </Route>
         <Route path="*" element={<Error404 />} />
@@ -44,7 +52,11 @@ const userRoutes = [
   },
   {
     path: "cuenta/crear",
-    element: <AccountCreateUser />,
+    element: <AccountCreateBank />,
+  },
+  {
+      path: "cuenta/estado",
+    element: <AccountStatement />,
   },
   {
     path: "transaccion/transferUsuario",
@@ -54,7 +66,21 @@ const userRoutes = [
     path: "transaccion/transferBanco",
     element: <TransferBank />,
   }
-
 ];
+
+const clientRoutes = [
+  {
+      path: "",
+    element: <HomeUser />,
+  },
+  {
+    path: "cuenta/crear",
+    element: <AccountCreateUser />,
+  },
+  {
+    path: "sucursales",
+    element: <Branch />
+  }
+]
 
 export default App;
