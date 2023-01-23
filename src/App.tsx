@@ -16,6 +16,7 @@ import AccountCreateBank from "./pages/ClientPages/AccountCreate/AccountCreateBa
 import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
+import { Segment } from "./components/organisms/Segment/Segment";
 
 const App = () => {
 
@@ -23,31 +24,33 @@ const App = () => {
   const [user, setUser] = useState({});
 
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="" element={<Layout isLogged={true} user={{}} />}>
-            <Route index element={<Login />} />
-            {userRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={`usuario/${route.path}`}
-                element={route.element}
-              />
-            ))}
-            {clientRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={`cliente/${route.path}`}
-                element={route.element}
-              />
-            ))}
-            <Route path="cajero" element={<HomeATM />} />
-          </Route>
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    // <ThemeProvider theme={theme}>
+    //   <BrowserRouter>
+    //     <Routes>
+    //       <Route path="" element={<Layout isLogged={true} user={{}} />}>
+    //         <Route index element={<Login />} />
+    //         {userRoutes.map((route) => (
+    //           <Route
+    //             key={route.path}
+    //             path={`usuario/${route.path}`}
+    //             element={route.element}
+    //           />
+    //         ))}
+    //         {clientRoutes.map((route) => (
+    //           <Route
+    //             key={route.path}
+    //             path={`cliente/${route.path}`}
+    //             element={route.element}
+    //           />
+    //         ))}
+    //         <Route path="cajero" element={<HomeATM />} />
+    //       </Route>
+    //       <Route path="*" element={<Error404 />} />
+    //     </Routes>
+    //   </BrowserRouter>
+      
+    // </ThemeProvider>
+    <Segment />
   );
 };
 
