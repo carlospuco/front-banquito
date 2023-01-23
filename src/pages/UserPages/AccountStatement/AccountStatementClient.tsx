@@ -17,6 +17,8 @@ const AccountStatementClient = () => {
     const [accountStatement, setaccountStatement] = useState<AccountStament | undefined>();
     const [accountStatements, setaccountStatements] = useState<AccountStament[]>();
 
+    const [data, setdata] = useState<any>({});
+
     const printRef = useRef();
 
     useEffect(() => {
@@ -38,11 +40,16 @@ const AccountStatementClient = () => {
     }
 
     const searchAccountStatement = async (accountNumber: string) => {
-        const data: AccountStament[] = await AccountStatementService.getStatements(accountNumber);
-        if (data) {
-            setaccountStatements(data);
-            setactiveAccountStatementTable(true);
-        } else {
+        event?.preventDefault();
+        try {
+            const data: AccountStament[] = await AccountStatementService.getStatements();
+            if (data) {
+                setaccountStatements(data);
+                setactiveAccountStatementTable(true);
+            } else {
+                // setactiveErrorModal(true)
+            }   
+        } catch (error) {
             // setactiveErrorModal(true)
         }
     }
