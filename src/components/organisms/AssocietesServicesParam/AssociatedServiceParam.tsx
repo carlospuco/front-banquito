@@ -98,6 +98,7 @@ export const AssociatedServiceParam = () => {
       //console.log(mapFirst());
     };
     callFun();
+    
   }, []);
 
   const mapFirst = (value: any) => {
