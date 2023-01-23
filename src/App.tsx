@@ -20,6 +20,7 @@ import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 import BranchUser from "./pages/UserPages/Branches/BranchUser";
+import HolidayUser from "./pages/UserPages/Holidays/HolidayUser";
 
 const App = () => {
 
@@ -79,6 +80,11 @@ const userRoutes = [
   {
     path: "sucursales",
     element: <BranchUser />,
+  },
+  {
+    path: "feriados",
+    element:<HolidayUser/>
+
   },
   {
     path: "account/signature",
