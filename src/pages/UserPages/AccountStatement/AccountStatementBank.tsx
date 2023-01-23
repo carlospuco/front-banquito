@@ -1,6 +1,6 @@
 import React, { ReactInstance, useRef, useState } from 'react'
 import { Box } from '@mui/system'
-import { Card, CardContent, Fade } from '@mui/material'
+import { Card, CardContent, Fade, Modal, Typography } from '@mui/material'
 import { ColorPalette } from '../../../style/ColorPalette'
 import { ChevronLeft, Print } from '@mui/icons-material'
 import { AccountStament } from '../../../services/account/model/AccountStatement'
@@ -10,14 +10,18 @@ import ButtonIcon from '../../../components/atoms/ButtonIcon'
 import AccountStatementBody from '../../../components/organisms/AccountStatement/AccountStatementBody'
 import ReactToPrint from 'react-to-print'
 import AccountStatementTable from '../../../components/organisms/AccountStatement/AccountStatementTable'
+import { useNavigate } from 'react-router-dom'
 
 const AccountStatementBank = () => {
-
+    const [activeErrorModal, setactiveErrorModal] = useState<boolean>(false);
+    const [errorMessage, seterrorMessage] = useState<string>("");
     const [activeSearchBox, setactiveSearchBox] = useState<boolean>(true);
     const [activeAccountStatement, setactiveAccountStatement] = useState<boolean>(false);
     const [activeAccountStatementTable, setactiveAccountStatementTable] = useState<boolean>(false);
     const [accountStatement, setaccountStatement] = useState<AccountStament | undefined>();
     const [accountStatements, setaccountStatements] = useState<AccountStament[]>([]);
+
+    const navigate = useNavigate();
 
     const printRef = useRef();
 
@@ -38,13 +42,18 @@ const AccountStatementBank = () => {
     }
 
     const searchAccountStatement = async (accountNumber: string) => {
-        const data: AccountStament[] = await AccountStatementService.getStatements(accountNumber);
-        if (data) {
-            setaccountStatements(data);
-            setactiveSearchBox(false);
-            setactiveAccountStatementTable(true);
-        } else {
-            // setactiveErrorModal(true)
+        try {
+            const data: AccountStament[] = (await AccountStatementService.getStatements(accountNumber)).data.data || [];
+            if (data) {
+                setaccountStatements(data);
+                setactiveAccountStatementTable(true);
+            } else {
+                setactiveErrorModal(true);
+                seterrorMessage("No se han encontrado datos");
+            }
+        } catch (error: any) {
+            setactiveErrorModal(true);
+            seterrorMessage(error.message);
         }
     }
 
@@ -124,6 +133,28 @@ const AccountStatementBank = () => {
                     </Fade>
                 </div>
             </Box>
+            <Modal
+                open={activeErrorModal}
+                onClose={() => { setactiveErrorModal(false); navigate('/cliente') }}>
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <Typography variant="h6" component="h2" sx={{ textTransform: 'uppercase' }}>
+                        A ocurrido un error
+                    </Typography>
+                    <Typography variant="body2" component="h2">
+                        {errorMessage}
+                    </Typography>
+                </Box>
+            </Modal>
         </>
     )
 }

@@ -2,8 +2,8 @@ export interface AccountStament {
     fullname: string
     accountCode: string
     clientIdentification: string,
-    lastCutOffDate: string,
-    actualCutOffDate: string,
+    lastCutOffDate: Date,
+    actualCutOffDate: Date,
     lastBalance: number,
     interestRate: number,
     presentBalance: number,
