@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import { SizeButton } from "../../atoms/SizeButton";
 import TextFieldAtom from "../../atoms/TextFieldAtom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,7 +10,7 @@ import { Dropdown } from "../../atoms/Dropdown";
 import TableMolecule from "../../molecules/TableMolecule";
 import ButtonIcon from "../../atoms/ButtonIcon";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 export const SearchContainer = styled.div`
   display: flex;
@@ -36,14 +36,13 @@ export const Container = styled.div`
   margin-left: 60px;
 `;
 
-
-interface ModalType {
-  children?:React.ReactNode;
-  isOpen: boolean;
-  toggle: () => void;
+interface Props {
+  openDialog: boolean;
 }
 
-export const AssociatedServiceParam = () => {
+export const AssociatedServiceParam = ({ openDialog }: Props) => {
+  const [open, setOpen] = useState(openDialog);
+
   const headersMock = [
     <Typography>Parametro ID</Typography>,
     <Typography>Nombre</Typography>,
@@ -69,6 +68,13 @@ export const AssociatedServiceParam = () => {
     ],
   ];
 
+  useEffect(() => {
+    if (openDialog) {
+      setOpen(true);
+    }
+  }, [openDialog]);
+
+ 
   return (
     <Container>
       <SearchContainer>
