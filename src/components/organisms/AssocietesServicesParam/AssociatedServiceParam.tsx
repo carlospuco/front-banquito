@@ -69,8 +69,8 @@ export const AssociatedServiceParam = () => {
       setfirst(fun.data.map((data) => data.params));
       console.log("carlos");
     };
-    return () => {};
-  }, []);
+    return () => {callFun()};
+  }, [first]);
 
   const mapFirst = () => {
     return first.map((data) => {
