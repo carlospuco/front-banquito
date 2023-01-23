@@ -20,6 +20,7 @@ import Branch from "./pages/ClientPages/Branches/Branch";
 import AccountStatementBank from "./pages/UserPages/AccountStatement/AccountStatementBank";
 import AccountStatementClient from "./pages/UserPages/AccountStatement/AccountStatementClient";
 import BranchUser from "./pages/UserPages/Branches/BranchUser";
+import { GeneralInformation } from "./components/organisms/Client/GeneralInformation";
 
 const App = () => {
 
@@ -27,7 +28,7 @@ const App = () => {
   const [user, setUser] = useState({});
 
   return (
-    <ThemeProvider theme={theme}>
+    /*<ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout isLogged={true} user={{}} />}>
@@ -51,7 +52,8 @@ const App = () => {
           <Route path="*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>
-    </ThemeProvider>
+    </ThemeProvider>*/
+    <GeneralInformation/>
   );
 };
 
