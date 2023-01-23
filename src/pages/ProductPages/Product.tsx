@@ -64,7 +64,7 @@ export const Product = () => {
 
     useEffect(() => {
         getProducts();
-    }, [])
+    }, [products])
 
     useEffect(() => {
         if (open) {
@@ -79,6 +79,7 @@ export const Product = () => {
         }
         setOpenDialog(false);
     }, [openDialog]);
+
     return (
         <Stack direction="row" spacing={2} >
             <Stack direction="column" spacing={2} sx={{ width: "100%" }} alignItems='center'>

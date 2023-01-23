@@ -1,9 +1,8 @@
-
-
-
 import { useState, useEffect } from "react";
 import { Dialog, Stack, Typography, Divider, Button, TextField, Select, MenuItem } from "@mui/material";
 import { useForm, FormProvider } from "react-hook-form";
+import DatePickerAtom from "../../../components/atoms/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
 interface Props {
     openDialog: boolean;
@@ -14,11 +13,25 @@ export const CreateProduct = ({ openDialog }: Props) => {
     const [products, setProducts] = useState<any[]>([]);
     const [interest, setInterest] = useState<any[]>([]);
     const [associatedServices, setAssociatedServices] = useState<any[]>([]);
+    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(
+        dayjs('2022-08-18'),
+    );
+    const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(
+        dayjs('2022-08-18'),
+    );
+
+    const handleChange = (newValue: Dayjs | null) => {
+        setSelectedDate(newValue);
+    };
+    const handleChangeEnd = (newValue: Dayjs | null) => {
+        setSelectedEndDate(newValue);
+    };
+
     const methods = useForm();
     const { register, handleSubmit } = methods;
 
     const handleClose = () => {
-        methods.reset({name: "", type: "", products: ""}, { keepValues: false });
+        methods.reset({ name: "", type: "", products: "" }, { keepValues: false });
         setOpen(false);
     }
 
@@ -32,8 +45,7 @@ export const CreateProduct = ({ openDialog }: Props) => {
                 id: data.id,
                 name: data.name,
             }
-            console.log(productTyp)
-            if(productTyp.id === undefined){
+            if (productTyp.id === undefined) {
                 return [];
             }
             return [productTyp]
@@ -54,17 +66,17 @@ export const CreateProduct = ({ openDialog }: Props) => {
         }
     }
 
-    const getAssociatedServices = async () => {
-        try {
-            const response = await fetch(`http://localhost:8087/api/associated-services`, {
-                method: 'GET',
-            });
-            const data = await response.json();
-            setAssociatedServices(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    /*  const getAssociatedServices = async () => {
+         try {
+             const response = await fetch(`http://localhost:8087/api/associated-services`, {
+                 method: 'GET',
+             });
+             const data = await response.json();
+             setAssociatedServices(data);
+         } catch (error) {
+             console.log(error);
+         }
+     } */
 
     const getProducts = async () => {
         try {
@@ -80,17 +92,31 @@ export const CreateProduct = ({ openDialog }: Props) => {
 
     const handleSubmitForm = async (data: any) => {
         try {
-            const productTyp = await getProductType(data.products);
+            const interest = data.interestRate.split("/")
+            
+            const prepareInterest = {
+                id: interest[0],
+                name: interest[1],
+                type: interest[2],
+            }
             const typeProduct = {
                 name: data.name,
-                type: data.type,
-                allowEarnInterest: data.allowEarnInterest,
-                allowGenAccState: data.allowGenAccState,
-                temporalyInterest: data.temporalyInterest,
-                products: productTyp 
+                status: data.status,
+                startDate: selectedDate?.format('YYYY-MM-DD'),
+                endDate: selectedEndDate?.format('YYYY-MM-DD'),
+                temporalyAccountState: data.temporalyAccountState,
+                useCheckbook: data.useCheckbook,
+                allowTransference: data.allowTransference,
+                typeClient: data.typeClient,
+                minOpeningBalance: data.minOpeningBalance,
+                interestRate: { ...prepareInterest },
+                associatedService: data.associatedServices,
+                productType: data.products,
 
             }
-            await fetch(`http://localhost:8087/api/product-types/types`, {
+
+            console.log(typeProduct)
+            await fetch(`http://localhost:8087/api/products/product`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,71 +138,167 @@ export const CreateProduct = ({ openDialog }: Props) => {
     useEffect(() => {
         getProducts();
         getInterest();
-        getAssociatedServices();
-    }, [])
+/*         getAssociatedServices();
+ */    }, [])
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2, margin: 5 }}>
-                <Stack direction="column" spacing={2} sx={{ width: "100%" }} alignItems='center'>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
+            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2, margin: 3 }}>
+                <Stack direction="column" spacing={2} sx={{ width: "100%" }} >
                     <Typography variant="h5">Crear Tipo de Producto</Typography>
                     <Divider sx={{ margin: 1, color: "black" }} />
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit((data) => handleSubmitForm(data))}>
                             <Stack direction="column" spacing={2} sx={{ width: "100%" }} alignItems='center'>
                                 <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        <Typography variant="body1">Nombre del producto</Typography>
+                                        <Typography variant="body1">Producto</Typography>
                                         <TextField {...register("name", { required: true })} label="Nombre del producto" variant="outlined" />
                                     </Stack>
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Estado</Typography>
                                         <Select
                                             label="status"
                                             placeholder="status"
                                             variant="outlined"
-                                            defaultValue={"Y"}
+                                            defaultValue={"ACT"}
                                             {...register("status", { required: true })}
                                         >
                                             <MenuItem value={"ACT"}>Activo</MenuItem>
                                             <MenuItem value={"INC"}>Inactivo</MenuItem>
                                         </Select>
                                     </Stack>
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        <Typography variant="body1">Permite ganar intereses</Typography>
+                                        <Typography variant="body1">Fecha inicio</Typography>
+                                        <DatePickerAtom
+                                            label="Fecha inicio"
+                                            value={selectedDate}
+                                            {...register("startDate", { required: false })}
+                                            onChange={(date) => handleChange(date)}
+
+                                        />
+                                    </Stack>
+
+                                </Stack>
+
+
+                                <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+                                    <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Fecha Final</Typography>
+                                        <DatePickerAtom
+                                            label="Fecha final"
+                                            value={selectedEndDate}
+                                            {...register("endDate", { required: false })}
+                                            onChange={(date) => handleChangeEnd(date)}
+                                        />
+                                    </Stack>
+
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Estado de cuenta</Typography>
                                         <Select
-                                            label="allowEarnInterest"
-                                            placeholder="Permite ganar intereses"
+                                            label="Estado de cuenta"
+                                            placeholder="Estado de cuenta "
                                             variant="outlined"
-                                            defaultValue={"Y"}
-                                            {...register("allowEarnInterest", { required: true })}
+                                            defaultValue={""}
+                                            {...register("associatedService", { required: false })}
+                                            onChange={(e) => e.target.value}
                                         >
-                                            <MenuItem value={"Y"}>Si</MenuItem>
-                                            <MenuItem value={"N"}>No</MenuItem>
+                                            <MenuItem value={"DAI"}>Diario</MenuItem>
+                                            <MenuItem value={"MOM"}>Mensual</MenuItem>
+                                            <MenuItem value={"BIM"}>Bimestral</MenuItem>
+                                        </Select>
+                                    </Stack>
+
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Uso de Chequera</Typography>
+                                        <Select
+                                            label="Uso de Chequera"
+                                            placeholder="Uso de Chequera"
+                                            variant="outlined"
+                                            defaultValue={""}
+                                            {...register("useCheckbook", { required: false })}
+                                            onChange={(e) => e.target.value}
+                                        >
+                                            <MenuItem id="Y" value="Y">Si</MenuItem>
+                                            <MenuItem id="N" value="N">No</MenuItem>
                                         </Select>
                                     </Stack>
                                 </Stack>
-                                <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                    <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        <Typography variant="body1">allowGenAccState</Typography>
+
+
+                                <Stack direction="row" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Transferencias</Typography>
                                         <Select
-                                            label="allowGenAccState"
-                                            placeholder="allowGenAccState"
+                                            label="Permite transferencias"
+                                            placeholder="Permite transferencias"
                                             variant="outlined"
-                                            defaultValue={"Y"}
-                                            {...register("allowGenAccState", { required: true })}
+                                            defaultValue={""}
+                                            {...register("allowTransference", { required: false })}
+                                            onChange={(e) => e.target.value}
                                         >
-                                            <MenuItem value={"Y"}>Si</MenuItem>
-                                            <MenuItem value={"N"}>No</MenuItem>
-                                        </Select>                                    </Stack>
-                                    <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+                                            <MenuItem id="Y" value="Y">Si</MenuItem>
+                                            <MenuItem id="N" value="N">No</MenuItem>
+                                        </Select>
+                                    </Stack>
+
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Tipo de Cliente</Typography>
+                                        <Select
+                                            label="Tipo de Cliente"
+                                            placeholder="Tipo de Cliente"
+                                            variant="outlined"
+                                            defaultValue={""}
+                                            {...register("typeClient", { required: false })}
+                                            onChange={(e) => e.target.value}
+                                        >
+                                            <MenuItem value={"NAT"}>Natural</MenuItem>
+                                            <MenuItem value={"BUS"}>Empresarial</MenuItem>
+                                        </Select>
+                                    </Stack>
+
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Saldo de apertura</Typography>
+                                        <TextField label="Saldo de apertura" variant="outlined" {...register("minOpeningBalance", { required: false })} />
+                                    </Stack>
+
+                                </Stack>
+
+
+                                <Stack direction="row" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Interes temporal</Typography>
                                         <Select
                                             label="Interes temporal"
                                             placeholder="Interes temporal"
                                             variant="outlined"
                                             defaultValue={""}
-                                            {...register("InterestRate", { required: true })}
+                                            {...register("interestRate", { required: false })}
+                                            onChange={(e) => e.target.value}
+                                        >
+                                            {interest.map((inter: any) => (
+                                                <MenuItem
+                                                    id={inter.id}
+                                                    value={inter.id + "/" + inter.name + "/" + inter.type + "/" + inter.calcBase}
+                                                >
+                                                    {inter.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </Stack>
+
+                                    <Stack direction="column" spacing={3} sx={{ width: "100%" }} justifyContent="center">
+                                        <Typography variant="body1">Tipo de producto</Typography>
+                                        <Select
+                                            label="Tipo de producto"
+                                            placeholder="Tipo de Producto"
+                                            variant="outlined"
+                                            defaultValue={""}
+                                            {...register("productType", { required: false })}
                                             onChange={(e) => e.target.value}
                                         >
                                             {interest.map((inter: any) => (
@@ -184,23 +306,12 @@ export const CreateProduct = ({ openDialog }: Props) => {
                                             ))}
                                         </Select>
                                     </Stack>
-                                    <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        {/* <Typography variant="body1">Servicios asociados</Typography>
-                                        <Select
-                                            label="servicios asociados"
-                                            placeholder="servicios asociados "
-                                            variant="outlined"
-                                            defaultValue={""}
-                                            {...register("associatedService", { required: false })}
-                                            onChange={(e) => e.target.value}
-                                        >
-                                            {associatedServices.map((associatedService: any) => (
-                                                <MenuItem id={associatedService.id} value={associatedService.name}>{associatedService.name}</MenuItem>
-                                            ))}
-                                        </Select> */}
-                                    </Stack>
+
+
                                 </Stack>
-                                <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+
+
+                                <Stack direction="row" spacing={3} sx={{ width: "100%" }} justifyContent="center">
                                     <Button variant="contained" type="submit">Crear</Button>
                                     <Button variant="contained" onClick={handleClose} color="error">Cancelar</Button>
                                 </Stack>

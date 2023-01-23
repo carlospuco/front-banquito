@@ -13,7 +13,7 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
     const { register, handleSubmit } = methods;
 
     const handleClose = () => {
-        methods.reset({name: "", type: "", products: ""}, { keepValues: false });
+        methods.reset({ name: "", type: "", products: "" }, { keepValues: false });
         setOpen(false);
     }
 
@@ -30,7 +30,7 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                 status: data.status
             }
             console.log(productTyp)
-            if(productTyp.id === undefined){
+            if (productTyp.id === undefined) {
                 return [];
             }
             return [productTyp]
@@ -60,7 +60,7 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                 allowEarnInterest: data.allowEarnInterest,
                 allowGenAccState: data.allowGenAccState,
                 temporalyInterest: data.temporalyInterest,
-                products: productTyp 
+                products: productTyp
 
             }
             await fetch(`http://localhost:8087/api/product-types/types`, {
@@ -87,23 +87,26 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
     }, [])
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
             <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2, margin: 5 }}>
-                <Stack direction="column" spacing={2} sx={{ width: "100%" }} alignItems='center'>
+                <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
                     <Typography variant="h5">Crear Producto</Typography>
                     <Divider sx={{ margin: 1, color: "black" }} />
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit((data) => handleSubmitForm(data))}>
                             <Stack direction="column" spacing={2} sx={{ width: "100%" }} alignItems='center'>
                                 <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Nombre del producto</Typography>
                                         <TextField {...register("name", { required: true })} label="Nombre del producto" variant="outlined" />
                                     </Stack>
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Tipo</Typography>
                                         <TextField {...register("type", { required: true })} label="Tipo" variant="outlined" />
                                     </Stack>
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Permite ganar intereses</Typography>
                                         <Select
@@ -117,7 +120,10 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                                             <MenuItem value={"N"}>No</MenuItem>
                                         </Select>
                                     </Stack>
+
                                 </Stack>
+
+
                                 <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">allowGenAccState</Typography>
@@ -130,7 +136,9 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                                         >
                                             <MenuItem value={"Y"}>Si</MenuItem>
                                             <MenuItem value={"N"}>No</MenuItem>
-                                        </Select>                                    </Stack>
+                                        </Select>
+                                    </Stack>
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Interes temporal</Typography>
                                         <Select
@@ -144,6 +152,7 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                                             <MenuItem value={"N"}>No</MenuItem>
                                         </Select>
                                     </Stack>
+
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Productos asociados</Typography>
                                         <Select
@@ -159,8 +168,11 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                                             ))}
                                         </Select>
                                     </Stack>
+
                                 </Stack>
-                                <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
+
+
+                                <Stack direction="row" spacing={2} justifyContent="center">
                                     <Button variant="contained" type="submit">Crear</Button>
                                     <Button variant="contained" onClick={handleClose} color="error">Cancelar</Button>
                                 </Stack>
