@@ -155,7 +155,7 @@ export const CreateTypeProduct = ({ openDialog }: Props) => {
                                             onChange={(e) => e.target.value}
                                         >
                                             {products.map((product: any) => (
-                                                <MenuItem id={product.id} value={product.name}>{product.name}</MenuItem>
+                                                <MenuItem id={product.id} value={product.name}> {product.name} </MenuItem>
                                             ))}
                                         </Select>
                                     </Stack>

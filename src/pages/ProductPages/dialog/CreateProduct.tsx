@@ -12,6 +12,8 @@ interface Props {
 export const CreateProduct = ({ openDialog }: Props) => {
     const [open, setOpen] = useState(openDialog);
     const [products, setProducts] = useState<any[]>([]);
+    const [interest, setInterest] = useState<any[]>([]);
+    const [associatedServices, setAssociatedServices] = useState<any[]>([]);
     const methods = useForm();
     const { register, handleSubmit } = methods;
 
@@ -20,23 +22,45 @@ export const CreateProduct = ({ openDialog }: Props) => {
         setOpen(false);
     }
 
-    const getProduct = async (name: string) => {
+    const getProductType = async (id: string) => {
         try {
-            console.log(name)
-            const response = await fetch(`http://localhost:8087/api/products/name-product?name=${name}`, {
+            const response = await fetch(`http://127.0.0.1:8087/api/product-types/type?id=${id}`, {
                 method: 'GET',
             });
             const data = await response.json();
             const productTyp = {
                 id: data.id,
                 name: data.name,
-                status: data.status
             }
             console.log(productTyp)
             if(productTyp.id === undefined){
                 return [];
             }
             return [productTyp]
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getInterest = async () => {
+        try {
+            const response = await fetch(`http://localhost:8087/api/interest-rate`, {
+                method: 'GET',
+            });
+            const data = await response.json();
+            setInterest(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getAssociatedServices = async () => {
+        try {
+            const response = await fetch(`http://localhost:8087/api/associated-services`, {
+                method: 'GET',
+            });
+            const data = await response.json();
+            setAssociatedServices(data);
         } catch (error) {
             console.log(error);
         }
@@ -56,7 +80,7 @@ export const CreateProduct = ({ openDialog }: Props) => {
 
     const handleSubmitForm = async (data: any) => {
         try {
-            const productTyp = await getProduct(data.products);
+            const productTyp = await getProductType(data.products);
             const typeProduct = {
                 name: data.name,
                 type: data.type,
@@ -87,6 +111,8 @@ export const CreateProduct = ({ openDialog }: Props) => {
 
     useEffect(() => {
         getProducts();
+        getInterest();
+        getAssociatedServices();
     }, [])
 
     return (
@@ -100,12 +126,21 @@ export const CreateProduct = ({ openDialog }: Props) => {
                             <Stack direction="column" spacing={2} sx={{ width: "100%" }} alignItems='center'>
                                 <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        <Typography variant="body1">Nombre tipo de producto</Typography>
-                                        <TextField {...register("name", { required: true })} label="Nombre del tipo de producto" variant="outlined" />
+                                        <Typography variant="body1">Nombre del producto</Typography>
+                                        <TextField {...register("name", { required: true })} label="Nombre del producto" variant="outlined" />
                                     </Stack>
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        <Typography variant="body1">Tipo</Typography>
-                                        <TextField {...register("type", { required: true })} label="Tipo" variant="outlined" />
+                                        <Typography variant="body1">Estado</Typography>
+                                        <Select
+                                            label="status"
+                                            placeholder="status"
+                                            variant="outlined"
+                                            defaultValue={"Y"}
+                                            {...register("status", { required: true })}
+                                        >
+                                            <MenuItem value={"ACT"}>Activo</MenuItem>
+                                            <MenuItem value={"INC"}>Inactivo</MenuItem>
+                                        </Select>
                                     </Stack>
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Permite ganar intereses</Typography>
@@ -137,30 +172,32 @@ export const CreateProduct = ({ openDialog }: Props) => {
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
                                         <Typography variant="body1">Interes temporal</Typography>
                                         <Select
-                                            label="temporalyInterest"
-                                            placeholder="temporalyInterest"
+                                            label="Interes temporal"
+                                            placeholder="Interes temporal"
                                             variant="outlined"
-                                            defaultValue={"Y"}
-                                            {...register("temporalyInterest", { required: true })}
+                                            defaultValue={""}
+                                            {...register("InterestRate", { required: true })}
+                                            onChange={(e) => e.target.value}
                                         >
-                                            <MenuItem value={"Y"}>Si</MenuItem>
-                                            <MenuItem value={"N"}>No</MenuItem>
+                                            {interest.map((inter: any) => (
+                                                <MenuItem id={inter.id} value={inter.name}>{inter.name}</MenuItem>
+                                            ))}
                                         </Select>
                                     </Stack>
                                     <Stack direction="column" spacing={2} sx={{ width: "100%" }} justifyContent="center">
-                                        <Typography variant="body1">Productos asociados</Typography>
+                                        {/* <Typography variant="body1">Servicios asociados</Typography>
                                         <Select
-                                            label="products"
-                                            placeholder="products"
+                                            label="servicios asociados"
+                                            placeholder="servicios asociados "
                                             variant="outlined"
                                             defaultValue={""}
-                                            {...register("products", { required: false })}
+                                            {...register("associatedService", { required: false })}
                                             onChange={(e) => e.target.value}
                                         >
-                                            {products.map((product: any) => (
-                                                <MenuItem id={product.id} value={product.name}>{product.name}</MenuItem>
+                                            {associatedServices.map((associatedService: any) => (
+                                                <MenuItem id={associatedService.id} value={associatedService.name}>{associatedService.name}</MenuItem>
                                             ))}
-                                        </Select>
+                                        </Select> */}
                                     </Stack>
                                 </Stack>
                                 <Stack direction="row" spacing={2} sx={{ width: "100%" }} justifyContent="center">
